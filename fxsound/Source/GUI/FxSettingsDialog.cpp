@@ -348,8 +348,6 @@ FxSettingsDialog::HelpSettingsPane::HelpSettingsPane() : SettingsPane("Help"), d
 	submitlogs_link_.setJustificationType(Justification::topLeft);
 	helpcenter_link_.setURL(URL(L"https://www.fxsound.com/learning-center"));
 	helpcenter_link_.setJustificationType(Justification::topLeft);
-    feedback_link_.setURL(URL("https://james722808.typeform.com/to/QfEP5QrP"));
-	feedback_link_.setJustificationType(Justification::topLeft);
 	updates_link_.setURL(URL(L"https://www.fxsound.com/changelog"));
 	updates_link_.setJustificationType(Justification::topLeft);
 
@@ -368,7 +366,6 @@ FxSettingsDialog::HelpSettingsPane::HelpSettingsPane() : SettingsPane("Help"), d
 	addChildComponent(quicktour_link_);
 	addChildComponent(submitlogs_link_);
 	addAndMakeVisible(helpcenter_link_);
-	//addAndMakeVisible(feedback_link_);
 	addAndMakeVisible(updates_link_);
 	addChildComponent(debug_log_toggle_);
 }
@@ -416,7 +413,6 @@ void FxSettingsDialog::HelpSettingsPane::setText()
     quicktour_link_.setButtonText(TRANS("Quick tour"));    
     submitlogs_link_.setButtonText(TRANS("Submit debug logs"));    
     helpcenter_link_.setButtonText(TRANS("Help center"));        
-    feedback_link_.setButtonText(TRANS("Feedback"));    
     updates_link_.setButtonText(TRANS("Check for updates"));
 }
 

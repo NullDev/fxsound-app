@@ -145,7 +145,6 @@ private:
 		FxHyperlink quicktour_link_;
 		FxHyperlink submitlogs_link_;
 		FxHyperlink helpcenter_link_;
-		FxHyperlink feedback_link_;
 		FxHyperlink updates_link_;
 		ToggleButton debug_log_toggle_;
 	};
