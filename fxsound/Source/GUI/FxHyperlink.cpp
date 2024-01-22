@@ -29,22 +29,22 @@ void FxHyperlink::paintButton(Graphics& g, bool, bool)
     auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
     const Colour text_colour = theme.getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::defaultText);
 
-	if (isEnabled())
-		g.setColour(text_colour);
-	else
-		g.setColour(text_colour.withMultipliedAlpha(0.4f));
-	
-	auto text_font = theme.getNormalFont();
-	text_font.setUnderline(true);
-	g.setFont(text_font);
+    if (isEnabled())
+        g.setColour(text_colour);
+    else
+        g.setColour(text_colour.withMultipliedAlpha(0.4f));
+    
+    auto text_font = theme.getNormalFont();
+    text_font.setUnderline(true);
+    g.setFont(text_font);
 
-	g.drawText(getButtonText(), getLocalBounds(), getJustificationType(), true);
+    g.drawText(getButtonText(), getLocalBounds(), getJustificationType(), true);
 }
 
 int FxHyperlink::getTextWidth()
 {
-	auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
-	auto font = theme.getNormalFont();
-	font.setUnderline(true);
-	return font.getStringWidth(getButtonText());
+    auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
+    auto font = theme.getNormalFont();
+    font.setUnderline(true);
+    return font.getStringWidth(getButtonText());
 }

@@ -26,24 +26,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class FxPowerButton : public DrawableButton
 {
 public:
-	FxPowerButton(const String &button_name);
-	~FxPowerButton() = default;
+    FxPowerButton(const String &button_name);
+    ~FxPowerButton() = default;
 
-	bool getPowerState();
-	void setPowerState(bool power_state);
+    bool getPowerState();
+    void setPowerState(bool power_state);
 
-	int getImageWidth();
-	void setImageWidth(int image_width);
+    int getImageWidth();
+    void setImageWidth(int image_width);
 
 private:
-	void paint(Graphics& g) override;
-	bool keyPressed(const KeyPress& key) override;
+    void paint(Graphics& g) override;
+    bool keyPressed(const KeyPress& key) override;
 
-	std::unique_ptr<Drawable> power_on_image_;
-	std::unique_ptr<Drawable> power_off_image_;
+    std::unique_ptr<Drawable> power_on_image_;
+    std::unique_ptr<Drawable> power_off_image_;
 
-	bool power_state_;
-	int image_width_;
-	
+    bool power_state_;
+    int image_width_;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FxPowerButton)
 };

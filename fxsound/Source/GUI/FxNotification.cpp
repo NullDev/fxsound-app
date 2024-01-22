@@ -20,159 +20,159 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 FxNotification::FxNotification()
 {
-	setLookAndFeel(&LookAndFeel::getDefaultLookAndFeel());
+    setLookAndFeel(&LookAndFeel::getDefaultLookAndFeel());
 
-	icon_ = Drawable::createFromImageData(BinaryData::logowhite_png, BinaryData::logowhite_pngSize);
-	icon_->setTransformToFit(juce::Rectangle<float>(15.0f, 10.0f, (float)ICON_WIDTH, (float)ICON_HEIGHT),
-								{ RectanglePlacement::xMid | RectanglePlacement::yMid });
-	addAndMakeVisible(icon_.get());
+    icon_ = Drawable::createFromImageData(BinaryData::logowhite_png, BinaryData::logowhite_pngSize);
+    icon_->setTransformToFit(juce::Rectangle<float>(15.0f, 10.0f, (float)ICON_WIDTH, (float)ICON_HEIGHT),
+                                { RectanglePlacement::xMid | RectanglePlacement::yMid });
+    addAndMakeVisible(icon_.get());
 
     auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
-	for (int i=0; i<3; i++)
-	{
-		message_lines_[i].setColour(Label::ColourIds::textColourId, theme.getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::defaultText));
-		message_lines_[i].setJustificationType(Justification::centred);
-		message_lines_[i].setBorderSize(BorderSize<int>(1, 0, 2, 0));
-		message_lines_[i].setMinimumHorizontalScale(1.0);
-		addChildComponent(message_lines_[i]);
-	}
-	
-	message_link_.setJustificationType(Justification::centredLeft);
-	addChildComponent(message_link_);
+    for (int i=0; i<3; i++)
+    {
+        message_lines_[i].setColour(Label::ColourIds::textColourId, theme.getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::defaultText));
+        message_lines_[i].setJustificationType(Justification::centred);
+        message_lines_[i].setBorderSize(BorderSize<int>(1, 0, 2, 0));
+        message_lines_[i].setMinimumHorizontalScale(1.0);
+        addChildComponent(message_lines_[i]);
+    }
+    
+    message_link_.setJustificationType(Justification::centredLeft);
+    addChildComponent(message_link_);
 
     setSize(WIDTH, HEIGHT);
 
-	setVisible(false);
+    setVisible(false);
 
     setAlwaysOnTop(true);
 }
 
 FxNotification::~FxNotification()
 {
-	removeFromDesktop();
+    removeFromDesktop();
 
-	setLookAndFeel(nullptr);
+    setLookAndFeel(nullptr);
 
-	if (isTimerRunning())
-	{
-		stopTimer();
-	}
+    if (isTimerRunning())
+    {
+        stopTimer();
+    }
 }
 
 void FxNotification::setMessage(const String& message, const std::pair<String, String>& link, bool autohide)
 {
     setLookAndFeel(&LookAndFeel::getDefaultLookAndFeel());
 
-	if (isTimerRunning())
-	{
-		if (getTimerInterval() == 7000)
-		{
-			stopTimer();
-		}
-		else
-		{
-			return;
-		}
-	}
+    if (isTimerRunning())
+    {
+        if (getTimerInterval() == 7000)
+        {
+            stopTimer();
+        }
+        else
+        {
+            return;
+        }
+    }
 
-	message_link_.setButtonText(link.first);
-	message_link_.setURL(URL(link.second));
+    message_link_.setButtonText(link.first);
+    message_link_.setURL(URL(link.second));
 
     auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
     auto font = theme.getSmallFont().withHeight(17.0f);
 
-	for (int i=0; i<3; i++)
-	{
-		message_lines_[i].setVisible(false);
-		message_lines_[i].setText("", NotificationType::dontSendNotification);
+    for (int i=0; i<3; i++)
+    {
+        message_lines_[i].setVisible(false);
+        message_lines_[i].setText("", NotificationType::dontSendNotification);
         message_lines_[i].setFont(font);
-	}
+    }
 
-	StringArray lines;
-	lines.addLines(message);
+    StringArray lines;
+    lines.addLines(message);
 
 
-	int width;
-	auto line_width = 0;
-	auto line_count = 0;
-	auto link_width = 0;
-	link_line_ = 0;
+    int width;
+    auto line_width = 0;
+    auto line_count = 0;
+    auto link_width = 0;
+    link_line_ = 0;
 
     width = WIDTH;
 
-	for (auto i=0; i<lines.size(); i++)
-	{
-		if (i == 3)
-		{
-			break;
-		}
-		line_count++;
+    for (auto i=0; i<lines.size(); i++)
+    {
+        if (i == 3)
+        {
+            break;
+        }
+        line_count++;
 
-		message_lines_[i].setText(lines[i], NotificationType::dontSendNotification);
+        message_lines_[i].setText(lines[i], NotificationType::dontSendNotification);
 
-		if (message_link_.getButtonText().isNotEmpty())
-		{
-			message_lines_[i].setJustificationType(Justification::centredLeft);
-			if (i == lines.size()-1)
-			{
-				link_width = message_link_.getTextWidth();
-				link_line_ = i;
-			}
-		}
-		else
-		{
-			message_lines_[i].setJustificationType(Justification::centred);
-		}
+        if (message_link_.getButtonText().isNotEmpty())
+        {
+            message_lines_[i].setJustificationType(Justification::centredLeft);
+            if (i == lines.size()-1)
+            {
+                link_width = message_link_.getTextWidth();
+                link_line_ = i;
+            }
+        }
+        else
+        {
+            message_lines_[i].setJustificationType(Justification::centred);
+        }
 
         auto margin = autohide ? 80 : 40;
-		line_width = font.getStringWidth(lines[i]) + link_width;
-		if (line_width > WIDTH-margin)
-		{
-			if (line_width > MAX_WIDTH-margin)
-			{
-				width = MAX_WIDTH;
-				if (link_width > 0)
-				{
-					link_line_ = i+1;
-				}
-			}
-			else
-			{
+        line_width = font.getStringWidth(lines[i]) + link_width;
+        if (line_width > WIDTH-margin)
+        {
+            if (line_width > MAX_WIDTH-margin)
+            {
+                width = MAX_WIDTH;
+                if (link_width > 0)
+                {
+                    link_line_ = i+1;
+                }
+            }
+            else
+            {
                 width = line_width + margin;				
-			}
-		}
-	}
+            }
+        }
+    }
 
     setSize(width, line_count * 20 + 60);
 }
 
 void FxNotification::showMessage(bool autohide)
 {
-	int last_line = 0;
+    int last_line = 0;
     int y = 0;
 
     auto x = autohide ? 40 : 20;
-	for (auto i=0; i<3 && message_lines_[i].getText().isNotEmpty(); i++)
-	{
+    for (auto i=0; i<3 && message_lines_[i].getText().isNotEmpty(); i++)
+    {
         message_lines_[i].setBounds(x, i * 20 + 30, getWidth() - (x*2), 20);
-		message_lines_[i].setVisible(true);
-		last_line = i;
-	}
+        message_lines_[i].setVisible(true);
+        last_line = i;
+    }
 
-	if (message_link_.getButtonText().isNotEmpty())
-	{
-		auto width = message_link_.getTextWidth();		
-		if (last_line == link_line_)
-		{
+    if (message_link_.getButtonText().isNotEmpty())
+    {
+        auto width = message_link_.getTextWidth();		
+        if (last_line == link_line_)
+        {
             auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
-			auto font = theme.getSmallFont().withHeight(17.0f);
-			x += font.getStringWidth(message_lines_[last_line].getText());
-		}
+            auto font = theme.getSmallFont().withHeight(17.0f);
+            x += font.getStringWidth(message_lines_[last_line].getText());
+        }
         message_link_.setBounds(x, link_line_ * 20 + 30, width, 20);
-		message_link_.setVisible(true);
+        message_link_.setVisible(true);
 
         y = message_link_.getBottom() + 10;
-	}
+    }
     else
     {
         y = message_lines_[last_line].getBottom() + 10;
@@ -216,7 +216,7 @@ void FxNotification::paint(Graphics& g)
 
 void FxNotification::timerCallback()
 {
-	stopTimer();
-	setVisible(false);
-	removeFromDesktop();
+    stopTimer();
+    setVisible(false);
+    removeFromDesktop();
 }

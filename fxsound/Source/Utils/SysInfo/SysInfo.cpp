@@ -20,79 +20,79 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 void SysInfo::enumAudioOutputs(StringArray& audioOutputNames)
 {
-	HRESULT hRes = S_OK;
-	IMMDeviceEnumerator *pEnumerator = NULL;
-	IMMDeviceCollection *pDeviceCollection = NULL;
+    HRESULT hRes = S_OK;
+    IMMDeviceEnumerator *pEnumerator = NULL;
+    IMMDeviceCollection *pDeviceCollection = NULL;
 
-	hRes = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL,
-		CLSCTX_ALL, __uuidof(IMMDeviceEnumerator),
-		(void**)&pEnumerator);
-	if (FAILED(hRes))
-		return;
+    hRes = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL,
+        CLSCTX_ALL, __uuidof(IMMDeviceEnumerator),
+        (void**)&pEnumerator);
+    if (FAILED(hRes))
+        return;
 
-	audioOutputNames.clear();
+    audioOutputNames.clear();
 
-	hRes = pEnumerator->EnumAudioEndpoints(eRender, DEVICE_STATEMASK_ALL & (~DEVICE_STATE_NOTPRESENT), &pDeviceCollection);
-	if (SUCCEEDED(hRes))
-	{
-		UINT count;
-		hRes = pDeviceCollection->GetCount(&count);
-		for (UINT index = 0; index < count; index++)
-		{
-			IMMDevice *pDevice = NULL;
-			hRes = pDeviceCollection->Item(index, &pDevice);
-			if (SUCCEEDED(hRes))
-			{
-				auto audioOutputName = getAudioOutputName(pDevice);
-				pDevice->Release();
-				if (audioOutputName.isEmpty())
-				{
-					pDeviceCollection->Release();
-					pEnumerator->Release();
-					return;
-				}
-				else
-				{
-					audioOutputNames.add(audioOutputName);
-				}
-			}
-			else
-				break;
+    hRes = pEnumerator->EnumAudioEndpoints(eRender, DEVICE_STATEMASK_ALL & (~DEVICE_STATE_NOTPRESENT), &pDeviceCollection);
+    if (SUCCEEDED(hRes))
+    {
+        UINT count;
+        hRes = pDeviceCollection->GetCount(&count);
+        for (UINT index = 0; index < count; index++)
+        {
+            IMMDevice *pDevice = NULL;
+            hRes = pDeviceCollection->Item(index, &pDevice);
+            if (SUCCEEDED(hRes))
+            {
+                auto audioOutputName = getAudioOutputName(pDevice);
+                pDevice->Release();
+                if (audioOutputName.isEmpty())
+                {
+                    pDeviceCollection->Release();
+                    pEnumerator->Release();
+                    return;
+                }
+                else
+                {
+                    audioOutputNames.add(audioOutputName);
+                }
+            }
+            else
+                break;
 
-		}
+        }
 
-		pDeviceCollection->Release();
-	}
+        pDeviceCollection->Release();
+    }
 
-	pEnumerator->Release();
+    pEnumerator->Release();
 }
 
 String SysInfo::getAudioOutputName(IMMDevice *pDevice)
 {
-	String audioOutputName;
+    String audioOutputName;
 
-	if (pDevice == NULL)
-		return audioOutputName;
+    if (pDevice == NULL)
+        return audioOutputName;
 
-	IPropertyStore *pPropStore = NULL;
-	PROPVARIANT propVariant;
+    IPropertyStore *pPropStore = NULL;
+    PROPVARIANT propVariant;
 
-	PropVariantInit(&propVariant);
-	if (SUCCEEDED(pDevice->OpenPropertyStore(STGM_READ, &pPropStore)))
-	{
-		if (SUCCEEDED(pPropStore->GetValue(PKEY_DeviceInterface_FriendlyName, &propVariant)))
-		{
-			if (propVariant.vt == VT_LPWSTR)
-			{
-				audioOutputName = propVariant.pwszVal;
-			}
-		}
+    PropVariantInit(&propVariant);
+    if (SUCCEEDED(pDevice->OpenPropertyStore(STGM_READ, &pPropStore)))
+    {
+        if (SUCCEEDED(pPropStore->GetValue(PKEY_DeviceInterface_FriendlyName, &propVariant)))
+        {
+            if (propVariant.vt == VT_LPWSTR)
+            {
+                audioOutputName = propVariant.pwszVal;
+            }
+        }
 
-		pPropStore->Release();
-	}
-	PropVariantClear(&propVariant);
+        pPropStore->Release();
+    }
+    PropVariantClear(&propVariant);
 
-	return audioOutputName;
+    return audioOutputName;
 }
 
 bool SysInfo::isServiceRunning(LPCWSTR service_name)

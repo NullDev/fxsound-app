@@ -24,25 +24,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 FxView::FxView()
 {
-	FxModel::getModel().addListener(this);
+    FxModel::getModel().addListener(this);
 
-	preset_list_.setJustificationType(Justification::centredLeft);
-	preset_list_.setTextWhenNoChoicesAvailable(L"");
-	preset_list_.setSize(LIST_WIDTH, LIST_HEIGHT);
-	preset_list_.setDescription(TRANS("Preset List"));
-	preset_list_.setWantsKeyboardFocus(true);
-	addAndMakeVisible(&preset_list_);
-	preset_list_.addListener(this);
-	preset_list_.addMouseListener(this, true);
+    preset_list_.setJustificationType(Justification::centredLeft);
+    preset_list_.setTextWhenNoChoicesAvailable(L"");
+    preset_list_.setSize(LIST_WIDTH, LIST_HEIGHT);
+    preset_list_.setDescription(TRANS("Preset List"));
+    preset_list_.setWantsKeyboardFocus(true);
+    addAndMakeVisible(&preset_list_);
+    preset_list_.addListener(this);
+    preset_list_.addMouseListener(this, true);
 
-	endpoint_list_.setJustificationType(Justification::centredLeft);
-	endpoint_list_.setTextWhenNoChoicesAvailable(L"");
-	endpoint_list_.setSize(LIST_WIDTH, LIST_HEIGHT);
-	endpoint_list_.setDescription(TRANS("Playback Device List"));
-	endpoint_list_.setWantsKeyboardFocus(true);
-	addAndMakeVisible(&endpoint_list_);
-	endpoint_list_.addListener(this);
-	endpoint_list_.addMouseListener(this, true);
+    endpoint_list_.setJustificationType(Justification::centredLeft);
+    endpoint_list_.setTextWhenNoChoicesAvailable(L"");
+    endpoint_list_.setSize(LIST_WIDTH, LIST_HEIGHT);
+    endpoint_list_.setDescription(TRANS("Playback Device List"));
+    endpoint_list_.setWantsKeyboardFocus(true);
+    addAndMakeVisible(&endpoint_list_);
+    endpoint_list_.addListener(this);
+    endpoint_list_.addMouseListener(this, true);
 
     addChildComponent(&error_notification_);
 }
@@ -70,35 +70,35 @@ void FxView::showErrorNotification(bool show)
 
 void FxView::comboBoxChanged(ComboBox* combobox)
 {
-	if (combobox == &preset_list_)
-	{
-		FxController::getInstance().setPreset(combobox->getSelectedItemIndex());
-	}
-	else if (combobox == &endpoint_list_)
-	{
-		FxController::getInstance().setOutput(combobox->getSelectedItemIndex());
-	}
+    if (combobox == &preset_list_)
+    {
+        FxController::getInstance().setPreset(combobox->getSelectedItemIndex());
+    }
+    else if (combobox == &endpoint_list_)
+    {
+        FxController::getInstance().setOutput(combobox->getSelectedItemIndex());
+    }
 }
 
 void FxView::modelChanged(FxModel::Event model_event)
 {
-	if (model_event == FxModel::Event::OutputListUpdated)
-	{
-		StringArray output_names = FxModel::getModel().getOutputNames();
+    if (model_event == FxModel::Event::OutputListUpdated)
+    {
+        StringArray output_names = FxModel::getModel().getOutputNames();
 
-		endpoint_list_.clear();
-		int id = 1;
-		for (auto name : output_names)
-		{
-			endpoint_list_.addItem(name, id);
+        endpoint_list_.clear();
+        int id = 1;
+        for (auto name : output_names)
+        {
+            endpoint_list_.addItem(name, id);
 
             id++;
-		}
-	}
+        }
+    }
 
-	if (model_event == FxModel::Event::OutputSelected)
-	{
-		endpoint_list_.setSelectedId(FxModel::getModel().getSelectedOutput() + 1, NotificationType::dontSendNotification);
+    if (model_event == FxModel::Event::OutputSelected)
+    {
+        endpoint_list_.setSelectedId(FxModel::getModel().getSelectedOutput() + 1, NotificationType::dontSendNotification);
 
         if (endpoint_list_.getError())
         {
@@ -108,7 +108,7 @@ void FxView::modelChanged(FxModel::Event model_event)
         {
             showErrorNotification(false);
         }
-	}
+    }
 
     if (model_event == FxModel::Event::OutputError)
     {
@@ -124,75 +124,75 @@ void FxView::modelChanged(FxModel::Event model_event)
             error_notification_.setVisible(false);
         }
     }
-	
-	if (model_event == FxModel::Event::PresetSelected)
-	{
-		preset_list_.setSelectedId(FxModel::getModel().getSelectedPreset() + 1, NotificationType::dontSendNotification);
-	}
+    
+    if (model_event == FxModel::Event::PresetSelected)
+    {
+        preset_list_.setSelectedId(FxModel::getModel().getSelectedPreset() + 1, NotificationType::dontSendNotification);
+    }
 
-	if (model_event == FxModel::Event::PresetListUpdated)
-	{
-		preset_list_.clear();
-		
-		auto count = FxModel::getModel().getPresetCount();
-		auto preset_type = FxModel::PresetType::AppPreset;
-		for (auto i=0; i<count; i++)
-		{
-			auto preset = FxModel::getModel().getPreset(i);
-			if (preset_type != preset.type)
-			{
-				preset_list_.addSeparator();
-				preset_type = preset.type;
-			}
+    if (model_event == FxModel::Event::PresetListUpdated)
+    {
+        preset_list_.clear();
+        
+        auto count = FxModel::getModel().getPresetCount();
+        auto preset_type = FxModel::PresetType::AppPreset;
+        for (auto i=0; i<count; i++)
+        {
+            auto preset = FxModel::getModel().getPreset(i);
+            if (preset_type != preset.type)
+            {
+                preset_list_.addSeparator();
+                preset_type = preset.type;
+            }
 
-			auto name = preset.name;
-			if (i == FxModel::getModel().getSelectedPreset() && FxModel::getModel().isPresetModified())
-			{
-				name = name + L" *";
-			}
-			preset_list_.addItem(name, i+1);						
-		}
+            auto name = preset.name;
+            if (i == FxModel::getModel().getSelectedPreset() && FxModel::getModel().isPresetModified())
+            {
+                name = name + L" *";
+            }
+            preset_list_.addItem(name, i+1);						
+        }
 
-		preset_list_.setSelectedId(FxModel::getModel().getSelectedPreset() + 1, NotificationType::dontSendNotification);
-	}
+        preset_list_.setSelectedId(FxModel::getModel().getSelectedPreset() + 1, NotificationType::dontSendNotification);
+    }
 
-	if (model_event == FxModel::Event::PresetModified)
-	{
-		auto& model = FxModel::getModel();
-		auto preset = model.getPreset(model.getSelectedPreset());
-		if (preset.name.isEmpty())
-		{
-			return;
-		}
-		if (model.isPresetModified())
-		{
-			preset_list_.changeItemText(model.getSelectedPreset()+1, preset.name + L" *");
-			if (!preset_list_.isPopupActive())
-			{
-				preset_list_.setText(preset.name + L" *", NotificationType::dontSendNotification);
-			}
-		}
-		else
-		{
-			auto count = FxModel::getModel().getPresetCount();
-			for (auto i=0; i<count; i++)
-			{
-				preset_list_.changeItemText(i + 1, FxModel::getModel().getPreset(i).name);
-			}
-			if (!preset_list_.isPopupActive())
-			{
-				preset_list_.setText(preset.name, NotificationType::dontSendNotification);
-			}
-		}
-		
-		return;
-	}
+    if (model_event == FxModel::Event::PresetModified)
+    {
+        auto& model = FxModel::getModel();
+        auto preset = model.getPreset(model.getSelectedPreset());
+        if (preset.name.isEmpty())
+        {
+            return;
+        }
+        if (model.isPresetModified())
+        {
+            preset_list_.changeItemText(model.getSelectedPreset()+1, preset.name + L" *");
+            if (!preset_list_.isPopupActive())
+            {
+                preset_list_.setText(preset.name + L" *", NotificationType::dontSendNotification);
+            }
+        }
+        else
+        {
+            auto count = FxModel::getModel().getPresetCount();
+            for (auto i=0; i<count; i++)
+            {
+                preset_list_.changeItemText(i + 1, FxModel::getModel().getPreset(i).name);
+            }
+            if (!preset_list_.isPopupActive())
+            {
+                preset_list_.setText(preset.name, NotificationType::dontSendNotification);
+            }
+        }
+        
+        return;
+    }
 }
 
 void FxView::mouseEnter(const MouseEvent&)
 {
-	preset_list_.highlightText(preset_list_.isMouseOver(true));
-	endpoint_list_.highlightText(endpoint_list_.isMouseOver(true));
+    preset_list_.highlightText(preset_list_.isMouseOver(true));
+    endpoint_list_.highlightText(endpoint_list_.isMouseOver(true));
 
     if (endpoint_list_.getError() && (endpoint_list_.isMouseOver(true) || error_notification_.isMouseOver(true)))
     {   
@@ -206,6 +206,6 @@ void FxView::mouseEnter(const MouseEvent&)
 
 void FxView::mouseExit(const MouseEvent&)
 {
-	preset_list_.highlightText(preset_list_.isMouseOver(true));
-	endpoint_list_.highlightText(endpoint_list_.isMouseOver(true));
+    preset_list_.highlightText(preset_list_.isMouseOver(true));
+    endpoint_list_.highlightText(endpoint_list_.isMouseOver(true));
 }

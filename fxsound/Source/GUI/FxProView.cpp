@@ -23,44 +23,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //==============================================================================
 FxProView::FxProView() : tool_tip_(this)
 {
-	addAndMakeVisible(effects_);
-	addAndMakeVisible(equalizer_);
+    addAndMakeVisible(effects_);
+    addAndMakeVisible(equalizer_);
     addChildComponent(visualizer_);
 
-	equalizer_.addMouseListener(this, true);
-	effects_.addMouseListener(this, true);
+    equalizer_.addMouseListener(this, true);
+    effects_.addMouseListener(this, true);
 
     auto& theme = dynamic_cast<LookAndFeel_V4&>(getLookAndFeel());
 
     tool_tip_.setColour(TooltipWindow::ColourIds::textColourId, theme.getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::defaultText));
     tool_tip_.setOpaque(false);
 
-	setOpaque(false);
-	setSize(WIDTH, HEIGHT);
+    setOpaque(false);
+    setSize(WIDTH, HEIGHT);
 }
 
 void FxProView::startVisualizer()
 {
-	visualizer_.start();
+    visualizer_.start();
 }
 
 void FxProView::pauseVisualizer()
 {
-	visualizer_.pause();
+    visualizer_.pause();
 }
 
 void FxProView::update()
 {
-	effects_.update();
-	equalizer_.update();
+    effects_.update();
+    equalizer_.update();
 
     if (FxController::getInstance().isAudioProcessing())
     {
         visualizer_.reset();
     }
 
-	visualizer_.setVisible(true);
-	setSize(WIDTH, HEIGHT + 20);
+    visualizer_.setVisible(true);
+    setSize(WIDTH, HEIGHT + 20);
 }
 
 void FxProView::resized()
@@ -80,13 +80,13 @@ void FxProView::resized()
 
     auto bounds = getLocalBounds();
 
-	effects_.setBounds(effects_.getBounds().withX(EFFECTS_X).withY(EFFECTS_Y+visualizer_offset));
-	equalizer_.setBounds(equalizer_.getBounds().withX(effects_.getRight() + 16).withY(EFFECTS_Y+visualizer_offset));
+    effects_.setBounds(effects_.getBounds().withX(EFFECTS_X).withY(EFFECTS_Y+visualizer_offset));
+    equalizer_.setBounds(equalizer_.getBounds().withX(effects_.getRight() + 16).withY(EFFECTS_Y+visualizer_offset));
 }
 
 void FxProView::paint(Graphics& g)
 {
-	auto& theme = dynamic_cast<LookAndFeel_V4&>(getLookAndFeel());
+    auto& theme = dynamic_cast<LookAndFeel_V4&>(getLookAndFeel());
 
     auto visualizer_offset = 0;
     if (visualizer_.isVisible())
@@ -94,47 +94,47 @@ void FxProView::paint(Graphics& g)
         visualizer_offset = visualizer_.getHeight() + 20;
     }
 
-	g.setFillType(FillType(theme.getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::windowBackground)));
-	g.fillAll();
+    g.setFillType(FillType(theme.getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::windowBackground)));
+    g.fillAll();
 
-	g.setFillType(FillType(Colour(0x0).withAlpha(0.2f)));
-	g.fillRoundedRectangle(20, 16, 920, 330+visualizer_offset, 8);
+    g.setFillType(FillType(Colour(0x0).withAlpha(0.2f)));
+    g.fillRoundedRectangle(20, 16, 920, 330+visualizer_offset, 8);
 
     auto power_state = FxModel::getModel().getPowerState();
 
     preset_list_.setEnabled(power_state);
     effects_.setEnabled(power_state);
     equalizer_.setEnabled(power_state);
-	visualizer_.setEnabled(power_state);
+    visualizer_.setEnabled(power_state);
 }
 
 void FxProView::comboBoxChanged(ComboBox* combobox)
 {
-	FxView::comboBoxChanged(combobox);
+    FxView::comboBoxChanged(combobox);
 }
 
 void FxProView::modelChanged(FxModel::Event model_event)
 {
-	FxView::modelChanged(model_event);
+    FxView::modelChanged(model_event);
 
-	if (model_event == FxModel::Event::PresetSelected)
-	{
-		update();
-	}
+    if (model_event == FxModel::Event::PresetSelected)
+    {
+        update();
+    }
 }
 
 void FxProView::mouseEnter(const MouseEvent& mouse_event)
 {
-	FxView::mouseEnter(mouse_event);
+    FxView::mouseEnter(mouse_event);
 
-	equalizer_.showValues(equalizer_.isMouseOver(true));
-	effects_.showValues(effects_.isMouseOver(true));
+    equalizer_.showValues(equalizer_.isMouseOver(true));
+    effects_.showValues(effects_.isMouseOver(true));
 }
 
 void FxProView::mouseExit(const MouseEvent& mouse_event)
 {
-	FxView::mouseEnter(mouse_event);
+    FxView::mouseEnter(mouse_event);
 
-	equalizer_.showValues(equalizer_.isMouseOver(true));
-	effects_.showValues(effects_.isMouseOver(true));
+    equalizer_.showValues(equalizer_.isMouseOver(true));
+    effects_.showValues(effects_.isMouseOver(true));
 }

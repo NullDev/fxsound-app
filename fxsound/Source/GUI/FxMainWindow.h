@@ -26,8 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //==============================================================================
 /*
-	This class implements the desktop window that contains an instance of
-	our MainComponent class.
+    This class implements the desktop window that contains an instance of
+    our MainComponent class.
 */
 class FxMainWindow : public FxWindow, private Button::Listener, public FxModel::Listener
 {
@@ -52,11 +52,11 @@ private:
     void buttonClicked(Button* button) override;
     void mouseEnter(const MouseEvent&) override;
     void modelChanged(FxModel::Event model_event) override;
-	void userTriedToCloseWindow() override;
-	void closeButtonPressed() override;
+    void userTriedToCloseWindow() override;
+    void closeButtonPressed() override;
 
-	FxLiteView lite_view_;
-	FxProView  pro_view_;
+    FxLiteView lite_view_;
+    FxProView  pro_view_;
     FxPowerButton power_button_;
     DrawableButton menu_button_;
     DrawableButton resize_button_;

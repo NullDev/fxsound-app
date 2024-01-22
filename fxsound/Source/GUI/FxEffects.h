@@ -26,51 +26,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class FxEffects : public Component
 {
 public:
-	enum EffectType {Fidelity=0, Ambience=1, Surround=2, DynamicBoost=3, Bass=4, NumEffects=5};
+    enum EffectType {Fidelity=0, Ambience=1, Surround=2, DynamicBoost=3, Bass=4, NumEffects=5};
 
-	FxEffects();
-	~FxEffects() = default;
+    FxEffects();
+    ~FxEffects() = default;
 
-	void update();
-	void showValues(bool show);
+    void update();
+    void showValues(bool show);
 
 private:
-	class FxEffectSlider : public Slider
-	{
-	public:
-		FxEffectSlider(EffectType effect);
-		~FxEffectSlider() = default;
+    class FxEffectSlider : public Slider
+    {
+    public:
+        FxEffectSlider(EffectType effect);
+        ~FxEffectSlider() = default;
 
-		void setEffectValue(float value);
-		void showValue(bool show);
+        void setEffectValue(float value);
+        void showValue(bool show);
 
         void enablementChanged() override;
 
-	private:
-		static constexpr int LABEL_HEIGHT = 12;
+    private:
+        static constexpr int LABEL_HEIGHT = 12;
 
-		void resized() override;
-		void valueChanged() override;
-		bool keyPressed(const KeyPress& key) override;
+        void resized() override;
+        void valueChanged() override;
+        bool keyPressed(const KeyPress& key) override;
 
-		Label value_label_;
+        Label value_label_;
 
-		EffectType effect_;
-	};
+        EffectType effect_;
+    };
 
-	static constexpr int WIDTH = 168;
-	static constexpr int HEIGHT = 242;
-	static constexpr int LABEL_HEIGHT = 14;
-	static constexpr int SLIDER_WIDTH = 160;
-	static constexpr int SLIDER_HEIGHT = 18;
-	static constexpr int X_MARGIN = 8;
-	static constexpr int Y_MARGIN = 21;
+    static constexpr int WIDTH = 168;
+    static constexpr int HEIGHT = 242;
+    static constexpr int LABEL_HEIGHT = 14;
+    static constexpr int SLIDER_WIDTH = 160;
+    static constexpr int SLIDER_HEIGHT = 18;
+    static constexpr int X_MARGIN = 8;
+    static constexpr int Y_MARGIN = 21;
 
-	void resized() override;
-	void paint(Graphics& g) override;
+    void resized() override;
+    void paint(Graphics& g) override;
 
-	std::vector<std::unique_ptr<Label>> labels_;
-	std::vector<std::unique_ptr<FxEffectSlider>> effects_;
+    std::vector<std::unique_ptr<Label>> labels_;
+    std::vector<std::unique_ptr<FxEffectSlider>> effects_;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxEffects)
 };

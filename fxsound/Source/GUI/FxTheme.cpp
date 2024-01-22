@@ -22,96 +22,96 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //==============================================================================
 FxTheme::FxTheme() : LookAndFeel_V4(getFxColourScheme())
 {
-	setColour(ComboBox::ColourIds::arrowColourId, Colour(0xe63462).withAlpha(1.0f));
-	setColour(ComboBox::ColourIds::backgroundColourId, Colour(0x000000).withAlpha(1.0f));
-	setColour(ComboBox::ColourIds::outlineColourId, Colour(0x000000).withAlpha(1.0f));
-	setColour(ComboBox::ColourIds::focusedOutlineColourId, Colour(0x000000).withAlpha(1.0f));
-	setColour(ComboBox::ColourIds::textColourId, Colour(0xb1b1b1).withAlpha(1.0f));
-	setColour(TextEditor::ColourIds::backgroundColourId, Colour(0x000000).withAlpha(1.0f));
-	setColour(TextEditor::ColourIds::outlineColourId, Colour(0x000000).withAlpha(1.0f));
-	setColour(TextEditor::ColourIds::focusedOutlineColourId, Colour(0x000000).withAlpha(1.0f));
-	setColour(TextEditor::ColourIds::textColourId, Colour(0xb1b1b1).withAlpha(1.0f));
-	setColour(TextEditor::ColourIds::highlightedTextColourId, Colour(0xffffff).withAlpha(1.0f));
-	setColour(TextButton::ColourIds::buttonColourId, Colour(0xd51535).withAlpha(1.0f));
-	setColour(TextButton::ColourIds::buttonOnColourId, Colour(0xd51535).withAlpha(1.0f));
-	setColour(TextButton::ColourIds::textColourOffId, Colour(0xffffff).withAlpha(1.0f));
-	setColour(TextButton::ColourIds::textColourOnId, Colour(0xffffff).withAlpha(1.0f));
-	setColour(HyperlinkButton::ColourIds::textColourId, Colour(0xffffff).withAlpha(1.0f));
-	setColour(CaretComponent::ColourIds::caretColourId, Colour(0xb1b1b1).withAlpha(1.0f));
-	setColour(PopupMenu::ColourIds::backgroundColourId, Colour(0x000000).withAlpha(1.0f));
-	setColour(PopupMenu::ColourIds::highlightedBackgroundColourId, Colour(0xe63462).withAlpha(1.0f));
+    setColour(ComboBox::ColourIds::arrowColourId, Colour(0xe63462).withAlpha(1.0f));
+    setColour(ComboBox::ColourIds::backgroundColourId, Colour(0x000000).withAlpha(1.0f));
+    setColour(ComboBox::ColourIds::outlineColourId, Colour(0x000000).withAlpha(1.0f));
+    setColour(ComboBox::ColourIds::focusedOutlineColourId, Colour(0x000000).withAlpha(1.0f));
+    setColour(ComboBox::ColourIds::textColourId, Colour(0xb1b1b1).withAlpha(1.0f));
+    setColour(TextEditor::ColourIds::backgroundColourId, Colour(0x000000).withAlpha(1.0f));
+    setColour(TextEditor::ColourIds::outlineColourId, Colour(0x000000).withAlpha(1.0f));
+    setColour(TextEditor::ColourIds::focusedOutlineColourId, Colour(0x000000).withAlpha(1.0f));
+    setColour(TextEditor::ColourIds::textColourId, Colour(0xb1b1b1).withAlpha(1.0f));
+    setColour(TextEditor::ColourIds::highlightedTextColourId, Colour(0xffffff).withAlpha(1.0f));
+    setColour(TextButton::ColourIds::buttonColourId, Colour(0xd51535).withAlpha(1.0f));
+    setColour(TextButton::ColourIds::buttonOnColourId, Colour(0xd51535).withAlpha(1.0f));
+    setColour(TextButton::ColourIds::textColourOffId, Colour(0xffffff).withAlpha(1.0f));
+    setColour(TextButton::ColourIds::textColourOnId, Colour(0xffffff).withAlpha(1.0f));
+    setColour(HyperlinkButton::ColourIds::textColourId, Colour(0xffffff).withAlpha(1.0f));
+    setColour(CaretComponent::ColourIds::caretColourId, Colour(0xb1b1b1).withAlpha(1.0f));
+    setColour(PopupMenu::ColourIds::backgroundColourId, Colour(0x000000).withAlpha(1.0f));
+    setColour(PopupMenu::ColourIds::highlightedBackgroundColourId, Colour(0xe63462).withAlpha(1.0f));
     setColour(Slider::ColourIds::rotarySliderOutlineColourId, Colour(0xe33250).withAlpha(0.2f));
     setColour(Slider::ColourIds::rotarySliderFillColourId, Colour(0xe33250).withAlpha(1.0f));
 
-	drop_down_arrow_ = Drawable::createFromImageData(BinaryData::dropdown_arrow_hover_svg, BinaryData::dropdown_arrow_hover_svgSize);
-	slider_thumb_ = Drawable::createFromImageData(BinaryData::Slider_Thumb_svg, BinaryData::Slider_Thumb_svgSize);
+    drop_down_arrow_ = Drawable::createFromImageData(BinaryData::dropdown_arrow_hover_svg, BinaryData::dropdown_arrow_hover_svgSize);
+    slider_thumb_ = Drawable::createFromImageData(BinaryData::Slider_Thumb_svg, BinaryData::Slider_Thumb_svgSize);
     drop_down_arrow_grey_ = Drawable::createFromImageData(BinaryData::dropdown_arrow_bw_svg, BinaryData::dropdown_arrow_bw_svgSize);
     slider_thumb_grey_ = Drawable::createFromImageData(BinaryData::Slider_Thumb_bw_svg, BinaryData::Slider_Thumb_bw_svgSize);
 }
 
 LookAndFeel_V4::ColourScheme FxTheme::getFxColourScheme()
 {
-	return { Colour(0x181818).withAlpha(1.0f), Colour(0x181818).withAlpha(1.0f), Colour(0x383838).withAlpha(1.0f),
-			 Colour(0x2B2B2B).withAlpha(1.0f), Colour(0xB1B1B1).withAlpha(1.0f), Colour(0x0).withAlpha(0.2f),
-			 0xffffffff, Colour(0x0c0c0c).withAlpha(1.0f), 0xffffffff };
+    return { Colour(0x181818).withAlpha(1.0f), Colour(0x181818).withAlpha(1.0f), Colour(0x383838).withAlpha(1.0f),
+             Colour(0x2B2B2B).withAlpha(1.0f), Colour(0xB1B1B1).withAlpha(1.0f), Colour(0x0).withAlpha(0.2f),
+             0xffffffff, Colour(0x0c0c0c).withAlpha(1.0f), 0xffffffff };
 }
 
 Label* FxTheme::createComboBoxTextBox(ComboBox& box)
 {
-	auto label = LookAndFeel_V4::createComboBoxTextBox(box);
-	label->setMouseCursor(MouseCursor::PointingHandCursor);
-	return label;
+    auto label = LookAndFeel_V4::createComboBoxTextBox(box);
+    label->setMouseCursor(MouseCursor::PointingHandCursor);
+    return label;
 }
 
 Font FxTheme::getComboBoxFont(ComboBox&)
 {
-	return Font(font_600_).withHeight(17.0f);
+    return Font(font_600_).withHeight(17.0f);
 }
 
 void FxTheme::positionComboBoxText(ComboBox& box, Label& label)
 {
-	label.setMinimumHorizontalScale(1.0);
-	LookAndFeel_V4::positionComboBoxText(box, label);
-	label.setBounds(label.getBounds().withX(20));
+    label.setMinimumHorizontalScale(1.0);
+    LookAndFeel_V4::positionComboBoxText(box, label);
+    label.setBounds(label.getBounds().withX(20));
 }
 
 void FxTheme::drawComboBox(Graphics& g, int width, int height, bool,
-							int, int, int, int, ComboBox& box)
+                            int, int, int, int, ComboBox& box)
 {
-	auto cornerSize = (float) height / 5;
-	Rectangle<int> boxBounds(0, 0, width, height);
+    auto cornerSize = (float) height / 5;
+    Rectangle<int> boxBounds(0, 0, width, height);
 
-	g.setColour(box.findColour(ComboBox::backgroundColourId));
-	g.fillRoundedRectangle(boxBounds.toFloat(), cornerSize);
+    g.setColour(box.findColour(ComboBox::backgroundColourId));
+    g.fillRoundedRectangle(boxBounds.toFloat(), cornerSize);
 
-	if (box.hasKeyboardFocus(true))
-	{
-		g.setColour(Colour(0xf7546f).withAlpha(0.2f));
-		g.drawRoundedRectangle(boxBounds.toFloat().reduced(0.5f, 0.5f), cornerSize, 1.0f);
-	}
-	else
-	{
-		g.setColour(box.findColour(ComboBox::outlineColourId));
-		g.drawRoundedRectangle(boxBounds.toFloat().reduced(0.5f, 0.5f), cornerSize, 1.0f);
-	}
-	
+    if (box.hasKeyboardFocus(true))
+    {
+        g.setColour(Colour(0xf7546f).withAlpha(0.2f));
+        g.drawRoundedRectangle(boxBounds.toFloat().reduced(0.5f, 0.5f), cornerSize, 1.0f);
+    }
+    else
+    {
+        g.setColour(box.findColour(ComboBox::outlineColourId));
+        g.drawRoundedRectangle(boxBounds.toFloat().reduced(0.5f, 0.5f), cornerSize, 1.0f);
+    }
+    
 
-	g.setColour(box.findColour(ComboBox::arrowColourId).withAlpha((box.isEnabled() ? 1.0f : 0.2f)));
+    g.setColour(box.findColour(ComboBox::arrowColourId).withAlpha((box.isEnabled() ? 1.0f : 0.2f)));
     if (box.isEnabled())
-	    drop_down_arrow_->drawWithin(g, Rectangle<float>(width - 32, 0, 12, height), { RectanglePlacement::centred }, 1.0f);
+        drop_down_arrow_->drawWithin(g, Rectangle<float>(width - 32, 0, 12, height), { RectanglePlacement::centred }, 1.0f);
     else
         drop_down_arrow_grey_->drawWithin(g, Rectangle<float>(width - 32, 0, 12, height), { RectanglePlacement::centred }, 1.0f);
 }
 
 void FxTheme::drawLinearSlider(Graphics& g, int x, int y, int width, int height,
-								float sliderPos, float minSliderPos, float maxSliderPos,
-								const Slider::SliderStyle style, Slider& slider)
+                                float sliderPos, float minSliderPos, float maxSliderPos,
+                                const Slider::SliderStyle style, Slider& slider)
 {
-	if (style == Slider::LinearVertical)
-	{
-		float dash_lengths[] = { 5, 2 };
+    if (style == Slider::LinearVertical)
+    {
+        float dash_lengths[] = { 5, 2 };
 
-		auto radius = getSliderThumbRadius(slider);
+        auto radius = getSliderThumbRadius(slider);
 
         Colour colour1;
         colour1 = Colour(0xe33250).withAlpha(0.4f);
@@ -124,11 +124,11 @@ void FxTheme::drawLinearSlider(Graphics& g, int x, int y, int width, int height,
             colour2 = colour2.withSaturation(0.0);
         }
 
-		g.setGradientFill(ColourGradient(colour1, { 0, 0 }, colour2, { 0, (float)height }, false));
-		g.drawDashedLine(Line<float>(x+width/2, y, x+width/2, y+height), dash_lengths, _countof(dash_lengths), 1.0f);
+        g.setGradientFill(ColourGradient(colour1, { 0, 0 }, colour2, { 0, (float)height }, false));
+        g.drawDashedLine(Line<float>(x+width/2, y, x+width/2, y+height), dash_lengths, _countof(dash_lengths), 1.0f);
 
         if (slider.isEnabled())
-		    slider_thumb_->drawWithin(g, Rectangle<float>(x+width/2-radius, sliderPos-radius, radius*2, radius*2), { RectanglePlacement::centred }, 1.0f);
+            slider_thumb_->drawWithin(g, Rectangle<float>(x+width/2-radius, sliderPos-radius, radius*2, radius*2), { RectanglePlacement::centred }, 1.0f);
         else
             slider_thumb_grey_->drawWithin(g, Rectangle<float>(x + width / 2 - radius, sliderPos - radius, radius * 2, radius * 2), { RectanglePlacement::centred }, 1.0f);
 
@@ -138,10 +138,10 @@ void FxTheme::drawLinearSlider(Graphics& g, int x, int y, int width, int height,
             g.setFillType(colour);
             g.fillRoundedRectangle(juce::Rectangle<float>(x + (width - SLIDER_THUMB_RADIUS*4) / 2, y, SLIDER_THUMB_RADIUS * 4, height).expanded(0, SLIDER_THUMB_RADIUS), 20);
         }
-	}
-	else if (style == Slider::LinearHorizontal)
-	{
-		auto radius = getSliderThumbRadius(slider);
+    }
+    else if (style == Slider::LinearHorizontal)
+    {
+        auto radius = getSliderThumbRadius(slider);
 
         Colour colour = Colour(0xe33250).withAlpha(0.2f);
         if (!slider.isEnabled())
@@ -149,8 +149,8 @@ void FxTheme::drawLinearSlider(Graphics& g, int x, int y, int width, int height,
             colour = colour.withSaturation(0.0);
         }
 
-		g.setFillType(colour);
-		g.fillRoundedRectangle(x, y+(height-3)/2, width, 3, 5.6f);
+        g.setFillType(colour);
+        g.fillRoundedRectangle(x, y+(height-3)/2, width, 3, 5.6f);
 
         colour = Colour(0xe33250).withAlpha(1.0f);
         if (!slider.isEnabled())
@@ -158,25 +158,25 @@ void FxTheme::drawLinearSlider(Graphics& g, int x, int y, int width, int height,
             colour = colour.withSaturation(0.0);
         }
 
-		g.setFillType(colour);
-		g.fillRoundedRectangle(x, y+(height-3)/2, sliderPos, 3, 5.6f);
+        g.setFillType(colour);
+        g.fillRoundedRectangle(x, y+(height-3)/2, sliderPos, 3, 5.6f);
 
         if (slider.isEnabled())
-		    slider_thumb_->drawWithin(g, Rectangle<float>(sliderPos-radius, y+height/2-radius, radius*2, radius*2), { RectanglePlacement::centred }, 1.0f);
+            slider_thumb_->drawWithin(g, Rectangle<float>(sliderPos-radius, y+height/2-radius, radius*2, radius*2), { RectanglePlacement::centred }, 1.0f);
         else
             slider_thumb_grey_->drawWithin(g, Rectangle<float>(sliderPos - radius, y + height / 2 - radius, radius * 2, radius * 2), { RectanglePlacement::centred }, 1.0f);
-	
-		if (slider.hasKeyboardFocus(true))
-		{
-			Colour colour = Colour(0xf7546f).withAlpha(0.1f);
-			g.setFillType(colour);
-			g.fillRoundedRectangle(juce::Rectangle<float>(x, y, width, height).expanded(SLIDER_THUMB_RADIUS/2, SLIDER_THUMB_RADIUS/2), height+SLIDER_THUMB_RADIUS);
-		}
-	}
-	else
-	{
-		LookAndFeel_V4::drawLinearSlider(g, x, y, width, height, sliderPos, minSliderPos, maxSliderPos, style, slider);
-	}
+    
+        if (slider.hasKeyboardFocus(true))
+        {
+            Colour colour = Colour(0xf7546f).withAlpha(0.1f);
+            g.setFillType(colour);
+            g.fillRoundedRectangle(juce::Rectangle<float>(x, y, width, height).expanded(SLIDER_THUMB_RADIUS/2, SLIDER_THUMB_RADIUS/2), height+SLIDER_THUMB_RADIUS);
+        }
+    }
+    else
+    {
+        LookAndFeel_V4::drawLinearSlider(g, x, y, width, height, sliderPos, minSliderPos, maxSliderPos, style, slider);
+    }
 }
 
 void FxTheme::drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
@@ -223,12 +223,12 @@ void FxTheme::drawRotarySlider(Graphics& g, int x, int y, int width, int height,
 
     g.setColour(fill);
     g.strokePath(valueArc, PathStrokeType(lineW, PathStrokeType::curved, PathStrokeType::rounded));
-	if (slider.hasKeyboardFocus(true))
-	{
-		DropShadow shadow;
-		shadow.colour = Colour(0xf7546f).withAlpha(0.1f);
-		shadow.drawForPath(g, backgroundArc);
-	}
+    if (slider.hasKeyboardFocus(true))
+    {
+        DropShadow shadow;
+        shadow.colour = Colour(0xf7546f).withAlpha(0.1f);
+        shadow.drawForPath(g, backgroundArc);
+    }
 
     auto thumbRadius = getSliderThumbRadius(slider);
     Point<float> thumbPoint(bounds.getCentreX() + arcRadius * std::cos(toAngle - MathConstants<float>::halfPi),
@@ -256,52 +256,52 @@ int FxTheme::getSliderThumbRadius(Slider& slider)
 
 Slider::SliderLayout FxTheme::getSliderLayout(Slider& slider)
 {
-	auto layout = LookAndFeel_V4::getSliderLayout(slider);
-	auto style = slider.getSliderStyle();
+    auto layout = LookAndFeel_V4::getSliderLayout(slider);
+    auto style = slider.getSliderStyle();
 
-	if (style == Slider::LinearVertical)
-	{
-		auto y = layout.sliderBounds.getY() + (SLIDER_THUMB_RADIUS*2);
-		auto height = layout.sliderBounds.getHeight() - (SLIDER_THUMB_RADIUS*2);
-		layout.sliderBounds.setY(y);
-		layout.sliderBounds.setHeight(height);
-	}
-	else if (style == Slider::LinearHorizontal)
-	{
-		auto width = layout.sliderBounds.getWidth() - (SLIDER_THUMB_RADIUS*3);
-		layout.sliderBounds.setWidth(width);
-	}
+    if (style == Slider::LinearVertical)
+    {
+        auto y = layout.sliderBounds.getY() + (SLIDER_THUMB_RADIUS*2);
+        auto height = layout.sliderBounds.getHeight() - (SLIDER_THUMB_RADIUS*2);
+        layout.sliderBounds.setY(y);
+        layout.sliderBounds.setHeight(height);
+    }
+    else if (style == Slider::LinearHorizontal)
+    {
+        auto width = layout.sliderBounds.getWidth() - (SLIDER_THUMB_RADIUS*3);
+        layout.sliderBounds.setWidth(width);
+    }
 
-	return layout;
+    return layout;
 }
 
 void FxTheme::drawPopupMenuItem(Graphics& g, const juce::Rectangle<int>& area, bool is_separator, bool is_active,
-								bool is_highlighted, bool is_ticked, bool has_submenu, const String& text,
-								const String& shortcut_key_text, const Drawable* icon, const Colour* text_colour)
+                                bool is_highlighted, bool is_ticked, bool has_submenu, const String& text,
+                                const String& shortcut_key_text, const Drawable* icon, const Colour* text_colour)
 {
-	LookAndFeel_V4::drawPopupMenuItem(g, area, is_separator, is_active, is_highlighted|is_ticked, false,
-										has_submenu, text, shortcut_key_text, icon, text_colour);
-	
-	if (is_ticked)
-	{
-		g.setColour(findColour(PopupMenu::textColourId).withAlpha(1.0f));
-		g.drawRect(area.toFloat());
-	}
+    LookAndFeel_V4::drawPopupMenuItem(g, area, is_separator, is_active, is_highlighted|is_ticked, false,
+                                        has_submenu, text, shortcut_key_text, icon, text_colour);
+    
+    if (is_ticked)
+    {
+        g.setColour(findColour(PopupMenu::textColourId).withAlpha(1.0f));
+        g.drawRect(area.toFloat());
+    }
 }
 
 Font FxTheme::getPopupMenuFont()
 {
-	return Font(font_600_).withHeight(17.0f);
+    return Font(font_600_).withHeight(17.0f);
 }
 
 void FxTheme::preparePopupMenuWindow(Component& new_window)
 {
-	new_window.setMouseCursor(MouseCursor::PointingHandCursor);
-	auto children = new_window.getChildren();
-	for (auto child : children)
-	{
-		child->setMouseCursor(MouseCursor::PointingHandCursor);
-	}
+    new_window.setMouseCursor(MouseCursor::PointingHandCursor);
+    auto children = new_window.getChildren();
+    for (auto child : children)
+    {
+        child->setMouseCursor(MouseCursor::PointingHandCursor);
+    }
 }
 
 void FxTheme::loadFont(String language)
@@ -324,12 +324,12 @@ void FxTheme::loadFont(String language)
         font_600_ = loadTypeface("NotoSansSC-Medium.otf");
         font_700_ = loadTypeface("NotoSansSC-Medium.otf");
     }
-	else if (language.startsWithIgnoreCase("th"))
-	{
-		font_400_ = loadTypeface("NotoSansThai-Regular.ttf");
-		font_600_ = loadTypeface("NotoSansThai-Medium.ttf");
-		font_700_ = loadTypeface("NotoSansThai-Medium.ttf");
-	}
+    else if (language.startsWithIgnoreCase("th"))
+    {
+        font_400_ = loadTypeface("NotoSansThai-Regular.ttf");
+        font_600_ = loadTypeface("NotoSansThai-Medium.ttf");
+        font_700_ = loadTypeface("NotoSansThai-Medium.ttf");
+    }
     else if (language.startsWithIgnoreCase("vi"))
     {
         font_400_ = loadTypeface("MontserratAlternates-Regular.ttf");
@@ -361,22 +361,22 @@ void FxTheme::loadFont(String language)
 
 Font FxTheme::getTextButtonFont(TextButton&, int button_height)
 {
-	return Font(font_600_.get()).withHeight(jmin(17.0f, (float)button_height));
+    return Font(font_600_.get()).withHeight(jmin(17.0f, (float)button_height));
 }
 
 Font FxTheme::getNormalFont()
 {
-	return Font(font_600_).withHeight(17.0f);
+    return Font(font_600_).withHeight(17.0f);
 }
 
 Font FxTheme::getSmallFont()
 {
-	return Font(font_400_).withHeight(14.0f);
+    return Font(font_400_).withHeight(14.0f);
 }
 
 Font FxTheme::getTitleFont()
 {
-	return Font(font_700_).withHeight(17.0f);
+    return Font(font_700_).withHeight(17.0f);
 }
 
 Typeface::Ptr FxTheme::getDefaultTypeface()
@@ -413,136 +413,136 @@ void FxTheme::drawTooltip(Graphics& g, const String& text, int width, int height
 }
 
 void FxTheme::drawDocumentWindowTitleBar(DocumentWindow& window, Graphics& g,
-										int w, int h, int titleSpaceX, int titleSpaceW,
-										const Image* icon, bool drawTitleTextOnLeft)
+                                        int w, int h, int titleSpaceX, int titleSpaceW,
+                                        const Image* icon, bool drawTitleTextOnLeft)
 {
-	if (w * h == 0)
-		return;
+    if (w * h == 0)
+        return;
 
-	auto isActive = window.isActiveWindow();
+    auto isActive = window.isActiveWindow();
 
-	g.setColour(getCurrentColourScheme().getUIColour(ColourScheme::widgetBackground));
-	g.fillAll();
+    g.setColour(getCurrentColourScheme().getUIColour(ColourScheme::widgetBackground));
+    g.fillAll();
 
-	Font font(12.0f, Font::plain);
-	g.setFont(font);
+    Font font(12.0f, Font::plain);
+    g.setFont(font);
 
-	auto textW = font.getStringWidth(window.getName());
-	auto iconW = 0;
-	auto iconH = 0;
+    auto textW = font.getStringWidth(window.getName());
+    auto iconW = 0;
+    auto iconH = 0;
 
-	if (icon != nullptr)
-	{
-		iconH = static_cast<int> (font.getHeight());
-		iconW = icon->getWidth() * iconH / icon->getHeight() + 4;
-	}
+    if (icon != nullptr)
+    {
+        iconH = static_cast<int> (font.getHeight());
+        iconW = icon->getWidth() * iconH / icon->getHeight() + 4;
+    }
 
-	textW = jmin(titleSpaceW, textW + iconW);
-	auto textX = drawTitleTextOnLeft ? titleSpaceX
-		: jmax(titleSpaceX, (w - textW) / 2);
+    textW = jmin(titleSpaceW, textW + iconW);
+    auto textX = drawTitleTextOnLeft ? titleSpaceX
+        : jmax(titleSpaceX, (w - textW) / 2);
 
-	if (textX + textW > titleSpaceX + titleSpaceW)
-		textX = titleSpaceX + titleSpaceW - textW;
+    if (textX + textW > titleSpaceX + titleSpaceW)
+        textX = titleSpaceX + titleSpaceW - textW;
 
-	if (icon != nullptr)
-	{
-		g.setOpacity(isActive ? 1.0f : 0.6f);
-		g.drawImageWithin(*icon, textX, (h - iconH) / 2, iconW, iconH,
-			RectanglePlacement::centred, false);
-		textX += iconW;
-		textW -= iconW;
-	}
+    if (icon != nullptr)
+    {
+        g.setOpacity(isActive ? 1.0f : 0.6f);
+        g.drawImageWithin(*icon, textX, (h - iconH) / 2, iconW, iconH,
+            RectanglePlacement::centred, false);
+        textX += iconW;
+        textW -= iconW;
+    }
 
-	if (window.isColourSpecified(DocumentWindow::textColourId) || isColourSpecified(DocumentWindow::textColourId))
-		g.setColour(window.findColour(DocumentWindow::textColourId));
-	else
-		g.setColour(getCurrentColourScheme().getUIColour(ColourScheme::defaultText));
+    if (window.isColourSpecified(DocumentWindow::textColourId) || isColourSpecified(DocumentWindow::textColourId))
+        g.setColour(window.findColour(DocumentWindow::textColourId));
+    else
+        g.setColour(getCurrentColourScheme().getUIColour(ColourScheme::defaultText));
 
-	g.drawText(window.getName(), textX, 0, textW, h, Justification::centredLeft, true);
+    g.drawText(window.getName(), textX, 0, textW, h, Justification::centredLeft, true);
 }
 
 class FxTheme_DocumentWindowButton : public Button
 {
 public:
-	FxTheme_DocumentWindowButton(const String& name, Colour c, const Path& normal, const Path& toggled)
-		: Button(name), colour(c), normalShape(normal), toggledShape(toggled)
-	{
-	}
+    FxTheme_DocumentWindowButton(const String& name, Colour c, const Path& normal, const Path& toggled)
+        : Button(name), colour(c), normalShape(normal), toggledShape(toggled)
+    {
+    }
 
-	void paintButton(Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override
-	{
-		auto background = Colours::grey;
+    void paintButton(Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override
+    {
+        auto background = Colours::grey;
 
-		if (auto* rw = findParentComponentOfClass<ResizableWindow>())
-			if (auto lf = dynamic_cast<LookAndFeel_V4*> (&rw->getLookAndFeel()))
-				background = lf->getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::widgetBackground);
+        if (auto* rw = findParentComponentOfClass<ResizableWindow>())
+            if (auto lf = dynamic_cast<LookAndFeel_V4*> (&rw->getLookAndFeel()))
+                background = lf->getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::widgetBackground);
 
-		g.fillAll(background);
+        g.fillAll(background);
 
-		g.setColour((!isEnabled() || shouldDrawButtonAsDown) ? colour.withAlpha(0.6f)
-			: colour);
+        g.setColour((!isEnabled() || shouldDrawButtonAsDown) ? colour.withAlpha(0.6f)
+            : colour);
 
-		if (shouldDrawButtonAsHighlighted)
-		{
-			g.fillAll();
-			g.setColour(background);
-		}
+        if (shouldDrawButtonAsHighlighted)
+        {
+            g.fillAll();
+            g.setColour(background);
+        }
 
-		auto& p = getToggleState() ? toggledShape : normalShape;
+        auto& p = getToggleState() ? toggledShape : normalShape;
 
-		auto reducedRect = Justification(Justification::centred)
-			.appliedToRectangle(Rectangle<int>(12, 12), getLocalBounds())
-			.toFloat();
+        auto reducedRect = Justification(Justification::centred)
+            .appliedToRectangle(Rectangle<int>(12, 12), getLocalBounds())
+            .toFloat();
 
-		g.fillPath(p, p.getTransformToScaleToFit(reducedRect, true));
-	}
+        g.fillPath(p, p.getTransformToScaleToFit(reducedRect, true));
+    }
 
 private:
-	Colour colour;
-	Path normalShape, toggledShape;
+    Colour colour;
+    Path normalShape, toggledShape;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxTheme_DocumentWindowButton)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxTheme_DocumentWindowButton)
 };
 
 Button* FxTheme::createDocumentWindowButton(int buttonType)
 {
-	Path shape;
-	auto crossThickness = 0.15f;
+    Path shape;
+    auto crossThickness = 0.15f;
 
-	if (buttonType == DocumentWindow::closeButton)
-	{
-		shape.addLineSegment({ 0.0f, 0.0f, 1.0f, 1.0f }, crossThickness);
-		shape.addLineSegment({ 1.0f, 0.0f, 0.0f, 1.0f }, crossThickness);
+    if (buttonType == DocumentWindow::closeButton)
+    {
+        shape.addLineSegment({ 0.0f, 0.0f, 1.0f, 1.0f }, crossThickness);
+        shape.addLineSegment({ 1.0f, 0.0f, 0.0f, 1.0f }, crossThickness);
 
-		return new FxTheme_DocumentWindowButton("close", Colour(0xffffffff), shape, shape);
-	}
+        return new FxTheme_DocumentWindowButton("close", Colour(0xffffffff), shape, shape);
+    }
 
-	if (buttonType == DocumentWindow::minimiseButton)
-	{
-		shape.addLineSegment({ 0.0f, 0.5f, 1.0f, 0.5f }, crossThickness);
+    if (buttonType == DocumentWindow::minimiseButton)
+    {
+        shape.addLineSegment({ 0.0f, 0.5f, 1.0f, 0.5f }, crossThickness);
 
-		return new FxTheme_DocumentWindowButton("minimise", Colour(0xffffffff), shape, shape);
-	}
+        return new FxTheme_DocumentWindowButton("minimise", Colour(0xffffffff), shape, shape);
+    }
 
-	if (buttonType == DocumentWindow::maximiseButton)
-	{
-		shape.addLineSegment({ 0.5f, 0.0f, 0.5f, 1.0f }, crossThickness);
-		shape.addLineSegment({ 0.0f, 0.5f, 1.0f, 0.5f }, crossThickness);
+    if (buttonType == DocumentWindow::maximiseButton)
+    {
+        shape.addLineSegment({ 0.5f, 0.0f, 0.5f, 1.0f }, crossThickness);
+        shape.addLineSegment({ 0.0f, 0.5f, 1.0f, 0.5f }, crossThickness);
 
-		Path fullscreenShape;
-		fullscreenShape.startNewSubPath(45.0f, 100.0f);
-		fullscreenShape.lineTo(0.0f, 100.0f);
-		fullscreenShape.lineTo(0.0f, 0.0f);
-		fullscreenShape.lineTo(100.0f, 0.0f);
-		fullscreenShape.lineTo(100.0f, 45.0f);
-		fullscreenShape.addRectangle(45.0f, 45.0f, 100.0f, 100.0f);
-		PathStrokeType(30.0f).createStrokedPath(fullscreenShape, fullscreenShape);
+        Path fullscreenShape;
+        fullscreenShape.startNewSubPath(45.0f, 100.0f);
+        fullscreenShape.lineTo(0.0f, 100.0f);
+        fullscreenShape.lineTo(0.0f, 0.0f);
+        fullscreenShape.lineTo(100.0f, 0.0f);
+        fullscreenShape.lineTo(100.0f, 45.0f);
+        fullscreenShape.addRectangle(45.0f, 45.0f, 100.0f, 100.0f);
+        PathStrokeType(30.0f).createStrokedPath(fullscreenShape, fullscreenShape);
 
-		return new FxTheme_DocumentWindowButton("maximise", Colour(0xffffffff), shape, fullscreenShape);
-	}
+        return new FxTheme_DocumentWindowButton("maximise", Colour(0xffffffff), shape, fullscreenShape);
+    }
 
-	jassertfalse;
-	return nullptr;
+    jassertfalse;
+    return nullptr;
 }
 
 TextLayout FxTheme::layoutTooltipText(const String& text, Colour colour) noexcept

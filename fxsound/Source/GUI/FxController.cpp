@@ -25,168 +25,168 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class FxDeviceErrorMessage : public FxWindow
 {
 public:
-	FxDeviceErrorMessage()
-	{
-		setContent(&message_content_);
-		centreWithSize(getWidth(), getHeight());
-		addToDesktop(0);
-		setAlwaysOnTop(true);
-	}
-	~FxDeviceErrorMessage() = default;
+    FxDeviceErrorMessage()
+    {
+        setContent(&message_content_);
+        centreWithSize(getWidth(), getHeight());
+        addToDesktop(0);
+        setAlwaysOnTop(true);
+    }
+    ~FxDeviceErrorMessage() = default;
 
-	void closeButtonPressed() override
-	{
-		exitModalState(0);
-		removeFromDesktop();
-	}
+    void closeButtonPressed() override
+    {
+        exitModalState(0);
+        removeFromDesktop();
+    }
 
 private:
-	class MessageComponent : public Component
-	{
-	public:
-		MessageComponent()
-		{
-			auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
+    class MessageComponent : public Component
+    {
+    public:
+        MessageComponent()
+        {
+            auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
 
-			error_message_.setText(TRANS("Oops! There's an issue with your playback device settings.\r\nBefore we can get started, please go through the "), NotificationType::dontSendNotification);
-			error_message_.setFont(theme.getNormalFont());
-			error_message_.setJustificationType(Justification::topLeft);
-			addAndMakeVisible(error_message_);
+            error_message_.setText(TRANS("Oops! There's an issue with your playback device settings.\r\nBefore we can get started, please go through the "), NotificationType::dontSendNotification);
+            error_message_.setFont(theme.getNormalFont());
+            error_message_.setJustificationType(Justification::topLeft);
+            addAndMakeVisible(error_message_);
 
-			error_link_.setButtonText(TRANS("troubleshooting steps here."));
-			error_link_.setURL(URL(L"https://www.fxsound.com/learning-center/installation-troubleshooting"));
-			error_link_.setJustificationType(Justification::topLeft);
-			addAndMakeVisible(error_link_);
+            error_link_.setButtonText(TRANS("troubleshooting steps here."));
+            error_link_.setURL(URL(L"https://www.fxsound.com/learning-center/installation-troubleshooting"));
+            error_link_.setJustificationType(Justification::topLeft);
+            addAndMakeVisible(error_link_);
 
-			contact_message_.setText(TRANS(" if you're still having problems."), NotificationType::dontSendNotification);
-			contact_message_.setFont(theme.getNormalFont());
-			contact_message_.setJustificationType(Justification::topLeft);
-			addAndMakeVisible(contact_message_);
+            contact_message_.setText(TRANS(" if you're still having problems."), NotificationType::dontSendNotification);
+            contact_message_.setFont(theme.getNormalFont());
+            contact_message_.setJustificationType(Justification::topLeft);
+            addAndMakeVisible(contact_message_);
 
-			contact_link_.setButtonText(TRANS("Contact us"));
-			contact_link_.setURL(URL(L"https://www.fxsound.com/support"));
-			contact_link_.setJustificationType(Justification::topLeft);
-			addAndMakeVisible(contact_link_);
+            contact_link_.setButtonText(TRANS("Contact us"));
+            contact_link_.setURL(URL(L"https://www.fxsound.com/support"));
+            contact_link_.setJustificationType(Justification::topLeft);
+            addAndMakeVisible(contact_link_);
 
-			setSize(WIDTH, HEIGHT);
-		}
-		~MessageComponent() = default;
+            setSize(WIDTH, HEIGHT);
+        }
+        ~MessageComponent() = default;
 
-	private:
-		static constexpr int WIDTH = 400;
-		static constexpr int HEIGHT = 142;
-		static constexpr int MESSAGE_HEIGHT = (24 + 2) * 2;
-		static constexpr int HYPERLINK_HEIGHT = 24;
+    private:
+        static constexpr int WIDTH = 400;
+        static constexpr int HEIGHT = 142;
+        static constexpr int MESSAGE_HEIGHT = (24 + 2) * 2;
+        static constexpr int HYPERLINK_HEIGHT = 24;
 
-		void resized() override
-		{
-			auto bounds = getLocalBounds();
-			bounds.setTop(10);
-			bounds.reduce(20, 0);
+        void resized() override
+        {
+            auto bounds = getLocalBounds();
+            bounds.setTop(10);
+            bounds.reduce(20, 0);
 
-			RectanglePlacement placement(RectanglePlacement::xLeft
-										| RectanglePlacement::yTop
-										| RectanglePlacement::doNotResize);
+            RectanglePlacement placement(RectanglePlacement::xLeft
+                                        | RectanglePlacement::yTop
+                                        | RectanglePlacement::doNotResize);
 
-			auto component_area = juce::Rectangle<int>(0, 0, bounds.getWidth(), MESSAGE_HEIGHT);
-			error_message_.setBounds(placement.appliedTo(component_area, bounds));
-			auto x = error_message_.getX() + error_message_.getBorderSize().getLeft();
+            auto component_area = juce::Rectangle<int>(0, 0, bounds.getWidth(), MESSAGE_HEIGHT);
+            error_message_.setBounds(placement.appliedTo(component_area, bounds));
+            auto x = error_message_.getX() + error_message_.getBorderSize().getLeft();
 
-			bounds.setTop(error_message_.getBottom() + 2);
-			component_area = juce::Rectangle<int>(0, 0, bounds.getWidth(), HYPERLINK_HEIGHT);
-			error_link_.setBounds(placement.appliedTo(component_area, bounds).withX(x));
+            bounds.setTop(error_message_.getBottom() + 2);
+            component_area = juce::Rectangle<int>(0, 0, bounds.getWidth(), HYPERLINK_HEIGHT);
+            error_link_.setBounds(placement.appliedTo(component_area, bounds).withX(x));
 
-			bounds.setTop(error_link_.getBottom() + 20);
-			component_area = juce::Rectangle<int>(0, 0, contact_link_.getTextWidth(), HYPERLINK_HEIGHT);
-			contact_link_.setBounds(placement.appliedTo(component_area, bounds).withX(x));
+            bounds.setTop(error_link_.getBottom() + 20);
+            component_area = juce::Rectangle<int>(0, 0, contact_link_.getTextWidth(), HYPERLINK_HEIGHT);
+            contact_link_.setBounds(placement.appliedTo(component_area, bounds).withX(x));
 
-			bounds = juce::Rectangle<int>(contact_link_.getRight(), contact_link_.getY(), error_message_.getWidth() - contact_link_.getWidth(), MESSAGE_HEIGHT / 2);
-			contact_message_.setBounds(bounds);
-		}
+            bounds = juce::Rectangle<int>(contact_link_.getRight(), contact_link_.getY(), error_message_.getWidth() - contact_link_.getWidth(), MESSAGE_HEIGHT / 2);
+            contact_message_.setBounds(bounds);
+        }
 
-		Label error_message_;
-		Label contact_message_;
-		FxHyperlink error_link_;
-		FxHyperlink contact_link_;
+        Label error_message_;
+        Label contact_message_;
+        FxHyperlink error_link_;
+        FxHyperlink contact_link_;
 
-		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MessageComponent)
-	};
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MessageComponent)
+    };
 
-	MessageComponent message_content_;
+    MessageComponent message_content_;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxDeviceErrorMessage)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxDeviceErrorMessage)
 };
 
 FxController::FxController() : message_window_(L"FxSoundHotkeys", (WNDPROC) eventCallback)
 {
-	dfx_enabled_ = true;
-	authenticated_ = true;
-	minimize_tip_ = true;
-	processing_time_over_tip_ = true;
-	subscription_validity_tip_ = true;
+    dfx_enabled_ = true;
+    authenticated_ = true;
+    minimize_tip_ = true;
+    processing_time_over_tip_ = true;
+    subscription_validity_tip_ = true;
     subscription_unverified_tip_ = true;
 
-	hotkeys_registered_ = false;
-	output_changed_ = false;
+    hotkeys_registered_ = false;
+    output_changed_ = false;
     playback_device_available_ = true;
 
-	device_count_ = 0;
-	output_device_id_ = L"";
-	
-	audio_process_time_ = 0;
-	audio_process_on_counter_ = 0;
-	audio_process_off_counter_ = 0;
-	audio_process_on_ = false;
+    device_count_ = 0;
+    output_device_id_ = L"";
+    
+    audio_process_time_ = 0;
+    audio_process_on_counter_ = 0;
+    audio_process_off_counter_ = 0;
+    audio_process_on_ = false;
 
     audio_process_start_time_ = -1LL;
 
     main_window_ = nullptr;
     audio_passthru_ = nullptr;
 
-	file_logger_.reset(FileLogger::createDefaultAppLogger(L"FxSound", L"fxsound.log", L"FxSound logs"));
+    file_logger_.reset(FileLogger::createDefaultAppLogger(L"FxSound", L"fxsound.log", L"FxSound logs"));
     logMessage("v" + JUCEApplication::getInstance()->getApplicationVersion());
-	logMessage(SystemStats::getOperatingSystemName());
-	logMessage(SystemStats::isOperatingSystem64Bit() ? String("x64") : String("x86"));
+    logMessage(SystemStats::getOperatingSystemName());
+    logMessage(SystemStats::isOperatingSystem64Bit() ? String("x64") : String("x86"));
 
-	auto view = settings_.getInt("view");
-	if (view <= 0 || view > 2)
-	{
-		view_ = ViewType::Pro;
-	}
-	else
-	{
-		view_ = static_cast<ViewType>(view);
-	}
-	auto hotkeys_support = settings_.getBool("hotkeys") && SysInfo::canSupportHotkeys();
-	FxModel::getModel().setHotkeySupport(hotkeys_support);
-	if (hotkeys_support)
-	{
-		registerHotkeys();
-	}
-	FxModel::getModel().setMenuClicked(settings_.getBool("menu_clicked"));
+    auto view = settings_.getInt("view");
+    if (view <= 0 || view > 2)
+    {
+        view_ = ViewType::Pro;
+    }
+    else
+    {
+        view_ = static_cast<ViewType>(view);
+    }
+    auto hotkeys_support = settings_.getBool("hotkeys") && SysInfo::canSupportHotkeys();
+    FxModel::getModel().setHotkeySupport(hotkeys_support);
+    if (hotkeys_support)
+    {
+        registerHotkeys();
+    }
+    FxModel::getModel().setMenuClicked(settings_.getBool("menu_clicked"));
 
     free_plan_ = settings_.getBool("free_plan");
     auto_select_output_ = !settings_.getBool("disable_auto_switch_output");
     hide_help_tooltips_ = settings_.getBool("hide_help_tooltips");
     output_device_id_ = settings_.getString("output_device_id");
     output_device_name_ = settings_.getString("output_device_name");
-	max_user_presets_ = settings_.getInt("max_user_presets");
-	if (max_user_presets_ < 10 || max_user_presets_ > 100)
-	{
-		max_user_presets_ = 20;
-	}
-	SetWindowLongPtr(message_window_.getHandle(), GWLP_USERDATA, (LONG_PTR)this);
+    max_user_presets_ = settings_.getInt("max_user_presets");
+    if (max_user_presets_ < 10 || max_user_presets_ > 100)
+    {
+        max_user_presets_ = 20;
+    }
+    SetWindowLongPtr(message_window_.getHandle(), GWLP_USERDATA, (LONG_PTR)this);
 
-	session_id_ = 0;
-	ProcessIdToSessionId(GetCurrentProcessId(), &session_id_);
-	WTSRegisterSessionNotification(message_window_.getHandle(), NOTIFY_FOR_ALL_SESSIONS);
+    session_id_ = 0;
+    ProcessIdToSessionId(GetCurrentProcessId(), &session_id_);
+    WTSRegisterSessionNotification(message_window_.getHandle(), NOTIFY_FOR_ALL_SESSIONS);
 }
 
 FxController::~FxController()
 {
-	WTSUnRegisterSessionNotification(message_window_.getHandle());
-	unregisterHotkeys();
-	stopTimer();
+    WTSUnRegisterSessionNotification(message_window_.getHandle());
+    unregisterHotkeys();
+    stopTimer();
 }
 
 
@@ -240,10 +240,10 @@ void FxController::config(const String& commandline)
 
 void FxController::init(FxMainWindow* main_window, AudioPassthru* audio_passthru)
 {
-	if (!isTimerRunning())
-	{
-		main_window_ = main_window;
-		audio_passthru_ = audio_passthru;
+    if (!isTimerRunning())
+    {
+        main_window_ = main_window;
+        audio_passthru_ = audio_passthru;
 
         auto_select_output_ = !settings_.getBool("disable_auto_switch_output");
         output_device_id_ = settings_.getString("output_device_id");
@@ -258,33 +258,33 @@ void FxController::init(FxMainWindow* main_window, AudioPassthru* audio_passthru
             return;
         }
 
-		audio_passthru_->setDspProcessingModule(&dfx_dsp_);
-		initOutputs(audio_passthru_->getSoundDevices());
-		if (dfx_enabled_)
-		{
-			startTimer(100);
-		}
-		else
-		{
-			main_window_->removeFromDesktop();
-			FxDeviceErrorMessage error_message;
-			error_message.runModalLoop();
-			JUCEApplication::getInstance()->systemRequestedQuit();
-			return;
-		}
-	
-		audio_passthru_->registerCallback(this);
+        audio_passthru_->setDspProcessingModule(&dfx_dsp_);
+        initOutputs(audio_passthru_->getSoundDevices());
+        if (dfx_enabled_)
+        {
+            startTimer(100);
+        }
+        else
+        {
+            main_window_->removeFromDesktop();
+            FxDeviceErrorMessage error_message;
+            error_message.runModalLoop();
+            JUCEApplication::getInstance()->systemRequestedQuit();
+            return;
+        }
+    
+        audio_passthru_->registerCallback(this);
 
-		auto path = File(File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName()) + L"FxSound\\Presets");
-		if (!path.exists())
-		{
-			path.createDirectory();
-		}
+        auto path = File(File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName()) + L"FxSound\\Presets");
+        if (!path.exists())
+        {
+            path.createDirectory();
+        }
 
-		FxModel::getModel().setPowerState(dfx_enabled_ && settings_.getBool("power"));
-		dfx_dsp_.powerOn(FxModel::getModel().getPowerState());
+        FxModel::getModel().setPowerState(dfx_enabled_ && settings_.getBool("power"));
+        dfx_dsp_.powerOn(FxModel::getModel().getPowerState());
 
-		FxModel::getModel().setEmail(settings_.getSecure("email").toLowerCase());
+        FxModel::getModel().setEmail(settings_.getSecure("email").toLowerCase());
 
         try 
         {
@@ -314,15 +314,15 @@ void FxController::init(FxMainWindow* main_window, AudioPassthru* audio_passthru
         {
         }
 
-		initPresets();
-		
-		auto preset_name = settings_.getString("preset");
+        initPresets();
+        
+        auto preset_name = settings_.getString("preset");
         if (!authenticated_)
         {
             preset_name = "General";
         }
-		auto selected_preset = FxModel::getModel().selectPreset(preset_name, false);
-		setPreset(selected_preset);
+        auto selected_preset = FxModel::getModel().selectPreset(preset_name, false);
+        setPreset(selected_preset);
 
         if (settings_.getString("version") != JUCEApplication::getInstance()->getApplicationVersion())
         {
@@ -332,8 +332,8 @@ void FxController::init(FxMainWindow* main_window, AudioPassthru* audio_passthru
             settings_.setBool("run_minimized", false);
         }
 
-		showView();
-		main_window_->centreWithSize(main_window_->getWidth(), main_window_->getHeight());
+        showView();
+        main_window_->centreWithSize(main_window_->getWidth(), main_window_->getHeight());
 
         survey_tip_ = !settings_.getBool("survey_displayed");
         
@@ -345,100 +345,100 @@ void FxController::init(FxMainWindow* main_window, AudioPassthru* audio_passthru
         {
             hideMainWindow();
         }
-	}
+    }
 }
 
 void FxController::initPresets()
 {
-	Array<FxModel::Preset> presets;
-	auto working_dir = File::getCurrentWorkingDirectory();
-	FileSearchPath preset_search_path(File::addTrailingSeparator(working_dir.getFullPathName()) + L"Factsoft");
-	auto app_preset_paths = preset_search_path.findChildFiles(File::findFiles, false, "*.fac");
-	for (auto path : app_preset_paths)
-	{
-		auto preset_info = dfx_dsp_.getPresetInfo(path.getFullPathName().toWideCharPointer());
-		if (!preset_info.name.empty())
-		{
-			presets.add({ preset_info.name.c_str(), path.getFullPathName(), FxModel::PresetType::AppPreset });
-		}
-	}
+    Array<FxModel::Preset> presets;
+    auto working_dir = File::getCurrentWorkingDirectory();
+    FileSearchPath preset_search_path(File::addTrailingSeparator(working_dir.getFullPathName()) + L"Factsoft");
+    auto app_preset_paths = preset_search_path.findChildFiles(File::findFiles, false, "*.fac");
+    for (auto path : app_preset_paths)
+    {
+        auto preset_info = dfx_dsp_.getPresetInfo(path.getFullPathName().toWideCharPointer());
+        if (!preset_info.name.empty())
+        {
+            presets.add({ preset_info.name.c_str(), path.getFullPathName(), FxModel::PresetType::AppPreset });
+        }
+    }
 
-	auto data_dir = File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName());
-	FileSearchPath user_preset_search_path(data_dir + L"FxSound\\Presets");
-	auto user_preset_paths = user_preset_search_path.findChildFiles(File::findFiles, false, "*.fac");
-	for (auto path : user_preset_paths)
-	{
-		auto preset_info = dfx_dsp_.getPresetInfo(path.getFullPathName().toWideCharPointer());
-		if (!preset_info.name.empty())
-		{
-			presets.add({ preset_info.name.c_str(), path.getFullPathName(), FxModel::PresetType::UserPreset });
-		}
-	}
+    auto data_dir = File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName());
+    FileSearchPath user_preset_search_path(data_dir + L"FxSound\\Presets");
+    auto user_preset_paths = user_preset_search_path.findChildFiles(File::findFiles, false, "*.fac");
+    for (auto path : user_preset_paths)
+    {
+        auto preset_info = dfx_dsp_.getPresetInfo(path.getFullPathName().toWideCharPointer());
+        if (!preset_info.name.empty())
+        {
+            presets.add({ preset_info.name.c_str(), path.getFullPathName(), FxModel::PresetType::UserPreset });
+        }
+    }
 
-	FxModel::getModel().initPresets(presets);
+    FxModel::getModel().initPresets(presets);
 }
 
 void FxController::showView()
 {
-	if (view_ == ViewType::Pro)
-	{
-		main_window_->showProView();
-	}
-	else
-	{
-		main_window_->showLiteView();
-	}
+    if (view_ == ViewType::Pro)
+    {
+        main_window_->showProView();
+    }
+    else
+    {
+        main_window_->showLiteView();
+    }
 }
 
 void FxController::switchView()
 {
-	if (view_ == ViewType::Pro)
-	{
-		view_ = ViewType::Lite;
-		main_window_->showLiteView();
-		settings_.setInt("view", static_cast<int>(view_));
-	}
-	else
-	{
-		view_ = ViewType::Pro;
-		main_window_->showProView();
-		settings_.setInt("view", static_cast<int>(view_));
-	}
+    if (view_ == ViewType::Pro)
+    {
+        view_ = ViewType::Lite;
+        main_window_->showLiteView();
+        settings_.setInt("view", static_cast<int>(view_));
+    }
+    else
+    {
+        view_ = ViewType::Pro;
+        main_window_->showProView();
+        settings_.setInt("view", static_cast<int>(view_));
+    }
 }
 
 ViewType FxController::getCurrentView()
 {
-	return view_;
+    return view_;
 }
 
 void FxController::hideMainWindow()
 {
-	if (main_window_->isOnDesktop())
-	{
-		main_window_->removeFromDesktop();
-		main_window_->setVisible(false);
+    if (main_window_->isOnDesktop())
+    {
+        main_window_->removeFromDesktop();
+        main_window_->setVisible(false);
         settings_.setBool("run_minimized", true);
-	}
-	
-	if (minimize_tip_)
-	{
+    }
+    
+    if (minimize_tip_)
+    {
         Thread::sleep(2000);
-		FxModel::getModel().pushMessage(TRANS("FxSound in system tray\r\nClick FxSound icon to reopen"));
-		minimize_tip_ = false;
-	}
+        FxModel::getModel().pushMessage(TRANS("FxSound in system tray\r\nClick FxSound icon to reopen"));
+        minimize_tip_ = false;
+    }
 }
 
 void FxController::showMainWindow()
 {
-	if (main_window_ != nullptr)
-	{
-		if (!main_window_->isVisible())
-		{
-			main_window_->setVisible(true);
+    if (main_window_ != nullptr)
+    {
+        if (!main_window_->isVisible())
+        {
+            main_window_->setVisible(true);
             settings_.setBool("run_minimized", false);
-		}
-		main_window_->addToDesktop(ComponentPeer::windowAppearsOnTaskbar);
-		main_window_->toFront(true);
+        }
+        main_window_->addToDesktop(ComponentPeer::windowAppearsOnTaskbar);
+        main_window_->toFront(true);
 
         if (survey_tip_)
         {
@@ -463,7 +463,7 @@ void FxController::showMainWindow()
                 }
             }
         }
-	}
+    }
 }
 
 bool FxController::isMainWindowVisible()
@@ -478,71 +478,71 @@ bool FxController::isMainWindowVisible()
 
 void FxController::setMenuClicked(bool clicked)
 {
-	settings_.setBool("menu_clicked", clicked);
-	FxModel::getModel().setMenuClicked(clicked);
+    settings_.setBool("menu_clicked", clicked);
+    FxModel::getModel().setMenuClicked(clicked);
 }
 
 FxWindow* FxController::getMainWindow()
 {
-	return main_window_;
+    return main_window_;
 }
 
 bool FxController::exit()
 {
-	if (FxModel::getModel().isPresetModified())
-	{
-		if (authenticated_ && !FxConfirmationMessage::showMessage(TRANS("Changes to your preset are not saved.\r\nDo you want to exit?")))
-		{
-			return false;
-		}
-	}
+    if (FxModel::getModel().isPresetModified())
+    {
+        if (authenticated_ && !FxConfirmationMessage::showMessage(TRANS("Changes to your preset are not saved.\r\nDo you want to exit?")))
+        {
+            return false;
+        }
+    }
 
     audio_processed_per_day_ += dfx_dsp_.getTotalAudioProcessedTime() / 1000;
     String s;
     s << audio_processed_per_day_;
     settings_.setSecure("audio_processed_per_day", s);
-	
-	JUCEApplication::getInstance()->systemRequestedQuit();
+    
+    JUCEApplication::getInstance()->systemRequestedQuit();
 
-	return true;
+    return true;
 }
 
 void FxController::setPowerState(bool power_state)
 {	
-	FxModel::getModel().setPowerState(power_state);
-	dfx_dsp_.powerOn(power_state);
-	settings_.setBool("power", power_state);
+    FxModel::getModel().setPowerState(power_state);
+    dfx_dsp_.powerOn(power_state);
+    settings_.setBool("power", power_state);
 }
 
 bool FxController::setPreset(int selected_preset)
 {
-	auto& model = FxModel::getModel();
+    auto& model = FxModel::getModel();
 
-	if (selected_preset < 0 || selected_preset >= model.getPresetCount())
-	{
-		return false;
-	}
+    if (selected_preset < 0 || selected_preset >= model.getPresetCount())
+    {
+        return false;
+    }
 
     auto preset = model.getPreset(selected_preset);
 
-	if (model.isPresetModified() && selected_preset != model.getSelectedPreset())
-	{
-		if (authenticated_ && !FxConfirmationMessage::showMessage(TRANS("Changes to your preset are not saved.\r\nDo you want to ignore the changes?")))
-		{
-			model.selectPreset(model.getSelectedPreset(), true);
-			return false;
-		}
+    if (model.isPresetModified() && selected_preset != model.getSelectedPreset())
+    {
+        if (authenticated_ && !FxConfirmationMessage::showMessage(TRANS("Changes to your preset are not saved.\r\nDo you want to ignore the changes?")))
+        {
+            model.selectPreset(model.getSelectedPreset(), true);
+            return false;
+        }
 
-		model.setPresetModified(false);
-	}
+        model.setPresetModified(false);
+    }
 
-	if (preset.path.isNotEmpty())
-	{
-		dfx_dsp_.loadPreset(preset.path.toWideCharPointer());
+    if (preset.path.isNotEmpty())
+    {
+        dfx_dsp_.loadPreset(preset.path.toWideCharPointer());
 
-		settings_.setString("preset", preset.name);
-		model.selectPreset(selected_preset, true);
-		model.setPresetModified(false);
+        settings_.setString("preset", preset.name);
+        model.selectPreset(selected_preset, true);
+        model.setPresetModified(false);
 
         for (auto e=0; e<FxEffects::EffectType::NumEffects; e++)
         {
@@ -556,28 +556,28 @@ bool FxController::setPreset(int selected_preset)
             dfx_dsp_.setEqBandFrequency(b, dfx_dsp_.getEqBandFrequency(b));
             dfx_dsp_.setEqBandBoostCut(b, dfx_dsp_.getEqBandBoostCut(b));
         }
-	}
+    }
 
-	return true;
+    return true;
 }
 
 void FxController::setOutput(int output)
 {
-	if (!isTimerRunning())
-	{
-		return;
-	}
+    if (!isTimerRunning())
+    {
+        return;
+    }
 
-	std::vector<SoundDevice> sound_devices = audio_passthru_->getSoundDevices();
+    std::vector<SoundDevice> sound_devices = audio_passthru_->getSoundDevices();
 
-	int i = 0;
+    int i = 0;
     bool output_found = false;
-	for (auto sound_device : sound_devices)
-	{
-		if (sound_device.isRealDevice)
-		{
-			if (i == output)
-			{
+    for (auto sound_device : sound_devices)
+    {
+        if (sound_device.isRealDevice)
+        {
+            if (i == output)
+            {
                 output_found = true;
 
                 if (output_device_id_ != sound_device.pwszID.c_str())
@@ -595,11 +595,11 @@ void FxController::setOutput(int output)
                     output_changed_ = true;
                 }
 
-				break;
-			}
-			i++;
-		}
-	}
+                break;
+            }
+            i++;
+        }
+    }
 
     if (!output_found)
     {
@@ -620,7 +620,7 @@ void FxController::setOutput(int output)
         FxModel::getModel().pushMessage(TRANS("Output: ") + output_device_name_);
     }
 
-	FxModel::getModel().setSelectedOutput(output);
+    FxModel::getModel().setSelectedOutput(output);
 }
 
 void FxController::selectOutput()
@@ -662,140 +662,140 @@ bool FxController::isPlaybackDeviceAvailable()
 
 void FxController::savePreset(const String& preset_name)
 {
-	auto& model = FxModel::getModel();
+    auto& model = FxModel::getModel();
 
-	auto preset_index = model.getSelectedPreset();
-	auto preset = model.getPreset(preset_index);
+    auto preset_index = model.getSelectedPreset();
+    auto preset = model.getPreset(preset_index);
 
-	if (preset_name.isEmpty())
-	{
-		auto path = File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName()) + L"FxSound\\Presets";
-		dfx_dsp_.savePreset(preset.name.toWideCharPointer(), path.toWideCharPointer());
+    if (preset_name.isEmpty())
+    {
+        auto path = File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName()) + L"FxSound\\Presets";
+        dfx_dsp_.savePreset(preset.name.toWideCharPointer(), path.toWideCharPointer());
 
-		model.pushMessage(FormatString(TRANS(L"Changes to preset %s are saved."), preset.name));
-	}
-	else
-	{
-		auto path = File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName()) + L"FxSound\\Presets";
-		dfx_dsp_.savePreset(preset_name.toWideCharPointer(), path.toWideCharPointer());
+        model.pushMessage(FormatString(TRANS(L"Changes to preset %s are saved."), preset.name));
+    }
+    else
+    {
+        auto path = File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName()) + L"FxSound\\Presets";
+        dfx_dsp_.savePreset(preset_name.toWideCharPointer(), path.toWideCharPointer());
 
-		initPresets();
-		
-		auto selected_preset = model.selectPreset(preset_name, false);
-		setPreset(selected_preset);
+        initPresets();
+        
+        auto selected_preset = model.selectPreset(preset_name, false);
+        setPreset(selected_preset);
 
-		model.pushMessage(FormatString(TRANS("New preset %s is saved."), preset_name));
+        model.pushMessage(FormatString(TRANS("New preset %s is saved."), preset_name));
 
-		if (model.getUserPresetCount() == FxController::getInstance().getMaxUserPresets())
-		{
-			Thread::sleep(2000);
-			model.pushMessage(TRANS("Reached the limit on new presets."));
-		}
-	}
+        if (model.getUserPresetCount() == FxController::getInstance().getMaxUserPresets())
+        {
+            Thread::sleep(2000);
+            model.pushMessage(TRANS("Reached the limit on new presets."));
+        }
+    }
 
-	model.setPresetModified(false);
+    model.setPresetModified(false);
 }
 
 void FxController::renamePreset(const String& new_name)
 {
-	auto& model = FxModel::getModel();
+    auto& model = FxModel::getModel();
 
-	auto preset_index = model.getSelectedPreset();
-	auto preset = model.getPreset(preset_index);
+    auto preset_index = model.getSelectedPreset();
+    auto preset = model.getPreset(preset_index);
 
-	if (preset.type == FxModel::PresetType::UserPreset)
-	{
-		auto path = File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName()) + L"FxSound\\Presets";
-		dfx_dsp_.savePreset(new_name.toWideCharPointer(), path.toWideCharPointer());
+    if (preset.type == FxModel::PresetType::UserPreset)
+    {
+        auto path = File::addTrailingSeparator(File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getFullPathName()) + L"FxSound\\Presets";
+        dfx_dsp_.savePreset(new_name.toWideCharPointer(), path.toWideCharPointer());
 
-		wchar_t old_path[MAX_PATH] = {};
-		wcscpy_s(old_path, preset.path.toWideCharPointer());
-		if (preset.path.length()+1 < MAX_PATH)
-		{
-			old_path[preset.path.length() + 1] = L'\0';
-		}
-		SHFILEOPSTRUCT file_op = { NULL, FO_DELETE, old_path, L"",
-								   FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT, FALSE, 0, L"" };
-		SHFileOperation(&file_op);
+        wchar_t old_path[MAX_PATH] = {};
+        wcscpy_s(old_path, preset.path.toWideCharPointer());
+        if (preset.path.length()+1 < MAX_PATH)
+        {
+            old_path[preset.path.length() + 1] = L'\0';
+        }
+        SHFILEOPSTRUCT file_op = { NULL, FO_DELETE, old_path, L"",
+                                   FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT, FALSE, 0, L"" };
+        SHFileOperation(&file_op);
 
-		initPresets();
+        initPresets();
 
-		auto selected_preset = model.selectPreset(new_name, false);
-		setPreset(selected_preset);
+        auto selected_preset = model.selectPreset(new_name, false);
+        setPreset(selected_preset);
 
-		model.setPresetModified(false);
-	}
+        model.setPresetModified(false);
+    }
 }
 
 void FxController::deletePreset()
 {
-	auto& model = FxModel::getModel();
+    auto& model = FxModel::getModel();
 
-	auto preset_index = model.getSelectedPreset();
-	auto preset = model.getPreset(preset_index);
+    auto preset_index = model.getSelectedPreset();
+    auto preset = model.getPreset(preset_index);
 
-	if (preset.type == FxModel::PresetType::UserPreset)
-	{
-		wchar_t path[MAX_PATH] = {};
-		
-		wcscpy_s(path, preset.path.toWideCharPointer());
-		if (preset.path.length() + 1 < MAX_PATH)
-		{
-			path[preset.path.length() + 1] = L'\0';
-		}
+    if (preset.type == FxModel::PresetType::UserPreset)
+    {
+        wchar_t path[MAX_PATH] = {};
+        
+        wcscpy_s(path, preset.path.toWideCharPointer());
+        if (preset.path.length() + 1 < MAX_PATH)
+        {
+            path[preset.path.length() + 1] = L'\0';
+        }
 
-		SHFILEOPSTRUCT file_op = { NULL, FO_DELETE, path, L"",
-								   FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT, FALSE, 0, L"" };
-		SHFileOperation(&file_op);
+        SHFILEOPSTRUCT file_op = { NULL, FO_DELETE, path, L"",
+                                   FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT, FALSE, 0, L"" };
+        SHFileOperation(&file_op);
 
-		initPresets();
+        initPresets();
 
-		setPreset(0);
+        setPreset(0);
 
-		FxModel::getModel().pushMessage(FormatString(TRANS("Preset %s is deleted."), preset.name));
-	}
+        FxModel::getModel().pushMessage(FormatString(TRANS("Preset %s is deleted."), preset.name));
+    }
 }
 
 void FxController::undoPreset()
 {
-	auto& model = FxModel::getModel();
+    auto& model = FxModel::getModel();
 
-	auto preset_index = model.getSelectedPreset();
+    auto preset_index = model.getSelectedPreset();
 
-	setPreset(preset_index);
+    setPreset(preset_index);
 
-	model.setPresetModified(false);
+    model.setPresetModified(false);
 }
 
 void FxController::resetPresets()
 {
-	auto& model = FxModel::getModel();
+    auto& model = FxModel::getModel();
 
-	auto count = model.getPresetCount();
-	for (auto i=0; i<count; i++)
-	{
-		auto preset = model.getPreset(i);
-		if (preset.type == FxModel::PresetType::UserPreset)
-		{
-			wchar_t path[MAX_PATH] = {};
+    auto count = model.getPresetCount();
+    for (auto i=0; i<count; i++)
+    {
+        auto preset = model.getPreset(i);
+        if (preset.type == FxModel::PresetType::UserPreset)
+        {
+            wchar_t path[MAX_PATH] = {};
 
-			wcscpy_s(path, preset.path.toWideCharPointer());
-			if (preset.path.length() + 1 < MAX_PATH)
-			{
-				path[preset.path.length() + 1] = L'\0';
-			}
+            wcscpy_s(path, preset.path.toWideCharPointer());
+            if (preset.path.length() + 1 < MAX_PATH)
+            {
+                path[preset.path.length() + 1] = L'\0';
+            }
 
-			SHFILEOPSTRUCT file_op = { NULL, FO_DELETE, path, L"",
-									   FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT, FALSE, 0, L"" };
-			SHFileOperation(&file_op);
-		}
-	}
-	
-	initPresets();
+            SHFILEOPSTRUCT file_op = { NULL, FO_DELETE, path, L"",
+                                       FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT, FALSE, 0, L"" };
+            SHFileOperation(&file_op);
+        }
+    }
+    
+    initPresets();
 
-	setPreset(0);
+    setPreset(0);
 
-	FxModel::getModel().pushMessage(TRANS("Presets are restored to factory defaults"));
+    FxModel::getModel().pushMessage(TRANS("Presets are restored to factory defaults"));
 }
 
 bool FxController::exportPresets(const StringArray& preset_names)
@@ -935,15 +935,15 @@ void FxController::updateOutputs(const std::vector<SoundDevice>& sound_devices)
 
     auto i = 0;
     auto output_selected = -1;
-	dfx_enabled_ = false;
-	for (auto sound_device : sound_devices)
-	{
-		if (sound_device.isRealDevice)
-		{
+    dfx_enabled_ = false;
+    for (auto sound_device : sound_devices)
+    {
+        if (sound_device.isRealDevice)
+        {
             // This is for updating the device names in the UI
             output_names.add(sound_device.deviceFriendlyName.c_str());
             // This is for caching the device id list
-			output_ids_.add(sound_device.pwszID.c_str());
+            output_ids_.add(sound_device.pwszID.c_str());
 
             if (output_device_id_.isEmpty() &&
                 output_device_name_ == sound_device.deviceFriendlyName.c_str())
@@ -960,13 +960,13 @@ void FxController::updateOutputs(const std::vector<SoundDevice>& sound_devices)
                 }
             }
 
-			i++;
-		}
-		else if (sound_device.deviceFriendlyName.find(L"FxSound Audio Enhancer") != std::wstring::npos)
-		{
-			dfx_enabled_ = true;
-		}
-	}
+            i++;
+        }
+        else if (sound_device.deviceFriendlyName.find(L"FxSound Audio Enhancer") != std::wstring::npos)
+        {
+            dfx_enabled_ = true;
+        }
+    }
 
     // Update the playack device names in the UI
     FxModel::getModel().initOutputNames(output_names);
@@ -1018,17 +1018,17 @@ void FxController::updateOutputs(const std::vector<SoundDevice>& sound_devices)
 
 float FxController::getEffectValue(FxEffects::EffectType effect)
 {
-	return dfx_dsp_.getEffectValue(static_cast<DfxDsp::Effect>(effect));
+    return dfx_dsp_.getEffectValue(static_cast<DfxDsp::Effect>(effect));
 }
 
 void FxController::setEffectValue(FxEffects::EffectType effect, float value)
 {
-	dfx_dsp_.setEffectValue(static_cast<DfxDsp::Effect>(effect), value);
+    dfx_dsp_.setEffectValue(static_cast<DfxDsp::Effect>(effect), value);
 
-	if (!FxModel::getModel().isPresetModified())
-	{
-		FxModel::getModel().setPresetModified(true);
-	}
+    if (!FxModel::getModel().isPresetModified())
+    {
+        FxModel::getModel().setPresetModified(true);
+    }
 }
 
 bool FxController::isAudioProcessing()
@@ -1038,12 +1038,12 @@ bool FxController::isAudioProcessing()
 
 int FxController::getNumEqBands()
 {
-	return dfx_dsp_.getNumEqBands();
+    return dfx_dsp_.getNumEqBands();
 }
 
 float FxController::getEqBandFrequency(int band_num)
 {
-	return dfx_dsp_.getEqBandFrequency(band_num);
+    return dfx_dsp_.getEqBandFrequency(band_num);
 }
 
 void FxController::setEqBandFrequency(int band_num, float freq)
@@ -1063,176 +1063,176 @@ void FxController::getEqBandFrequencyRange(int band_num, float* min_freq, float*
 
 float FxController::getEqBandBoostCut(int band_num)
 {
-	return dfx_dsp_.getEqBandBoostCut(band_num);
+    return dfx_dsp_.getEqBandBoostCut(band_num);
 }
 
 void FxController::setEqBandBoostCut(int band_num, float boost)
 {
-	dfx_dsp_.setEqBandBoostCut(band_num, boost);
+    dfx_dsp_.setEqBandBoostCut(band_num, boost);
 
-	if (!FxModel::getModel().isPresetModified())
-	{
-		FxModel::getModel().setPresetModified(true);
-	}
+    if (!FxModel::getModel().isPresetModified())
+    {
+        FxModel::getModel().setPresetModified(true);
+    }
 }
 
 LRESULT CALLBACK FxController::eventCallback(HWND hwnd, const UINT message, const WPARAM w_param, const LPARAM l_param)
 {
-	FxController* controller = (FxController*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+    FxController* controller = (FxController*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 
-	switch (message)
-	{
-		case WM_HOTKEY:
-		{
-			if (w_param == CMD_ON_OFF)
-			{
-				auto power_state = !FxModel::getModel().getPowerState();
-				controller->setPowerState(power_state);
+    switch (message)
+    {
+        case WM_HOTKEY:
+        {
+            if (w_param == CMD_ON_OFF)
+            {
+                auto power_state = !FxModel::getModel().getPowerState();
+                controller->setPowerState(power_state);
 
                 String param = FxModel::getModel().getPowerState() ? TRANS(L"on") : TRANS(L"off");
                 FxModel::getModel().pushMessage(controller->FormatString(TRANS("FxSound is %s."), param));
-			}
-			if (w_param == CMD_OPEN_CLOSE)
-			{
-				if (controller->main_window_->isOnDesktop())
-				{
-					controller->hideMainWindow();
-				}
-				else
-				{
-					controller->showMainWindow();
-				}
-			}
-			if (w_param == CMD_NEXT_PRESET && FxModel::getModel().getPowerState())
-			{
-				auto preset_index = FxModel::getModel().getSelectedPreset();
-				auto preset_count = FxModel::getModel().getPresetCount();
-				if (preset_count > 1)
-				{
-					if (preset_index < preset_count - 1)
-					{
-						preset_index++;
-					}
-					else
-					{
-						preset_index = 0;
-					}
-					if (controller->setPreset(preset_index))
-					{
-						FxModel::getModel().pushMessage(TRANS("Preset: ") + FxModel::getModel().getPreset(preset_index).name);
-					}
-				}
-			}
-			if (w_param == CMD_PREVIOUS_PRESET && FxModel::getModel().getPowerState())
-			{
-				auto preset_index = FxModel::getModel().getSelectedPreset();
-				auto preset_count = FxModel::getModel().getPresetCount();
-				if (preset_count > 1)
-				{
-					if (preset_index != 0)
-					{
-						preset_index--;
-					}
-					else
-					{
-						preset_index = preset_count - 1;
-					}
-					if (controller->setPreset(preset_index))
-					{
-						FxModel::getModel().pushMessage(TRANS("Preset: ") + FxModel::getModel().getPreset(preset_index).name);
-					}
-				}
-			}
-			if (w_param == CMD_NEXT_OUTPUT)
-			{
-				auto output_index = FxModel::getModel().getSelectedOutput();
-				auto output_names = FxModel::getModel().getOutputNames();
-				if (output_names.size() > 1)
-				{
-					if (output_index < output_names.size() - 1)
-					{
-						output_index++;
-					}
-					else
-					{
-						output_index = 0;
-					}
-					controller->setOutput(output_index);
-				}
-			}
-		}
-		break;
+            }
+            if (w_param == CMD_OPEN_CLOSE)
+            {
+                if (controller->main_window_->isOnDesktop())
+                {
+                    controller->hideMainWindow();
+                }
+                else
+                {
+                    controller->showMainWindow();
+                }
+            }
+            if (w_param == CMD_NEXT_PRESET && FxModel::getModel().getPowerState())
+            {
+                auto preset_index = FxModel::getModel().getSelectedPreset();
+                auto preset_count = FxModel::getModel().getPresetCount();
+                if (preset_count > 1)
+                {
+                    if (preset_index < preset_count - 1)
+                    {
+                        preset_index++;
+                    }
+                    else
+                    {
+                        preset_index = 0;
+                    }
+                    if (controller->setPreset(preset_index))
+                    {
+                        FxModel::getModel().pushMessage(TRANS("Preset: ") + FxModel::getModel().getPreset(preset_index).name);
+                    }
+                }
+            }
+            if (w_param == CMD_PREVIOUS_PRESET && FxModel::getModel().getPowerState())
+            {
+                auto preset_index = FxModel::getModel().getSelectedPreset();
+                auto preset_count = FxModel::getModel().getPresetCount();
+                if (preset_count > 1)
+                {
+                    if (preset_index != 0)
+                    {
+                        preset_index--;
+                    }
+                    else
+                    {
+                        preset_index = preset_count - 1;
+                    }
+                    if (controller->setPreset(preset_index))
+                    {
+                        FxModel::getModel().pushMessage(TRANS("Preset: ") + FxModel::getModel().getPreset(preset_index).name);
+                    }
+                }
+            }
+            if (w_param == CMD_NEXT_OUTPUT)
+            {
+                auto output_index = FxModel::getModel().getSelectedOutput();
+                auto output_names = FxModel::getModel().getOutputNames();
+                if (output_names.size() > 1)
+                {
+                    if (output_index < output_names.size() - 1)
+                    {
+                        output_index++;
+                    }
+                    else
+                    {
+                        output_index = 0;
+                    }
+                    controller->setOutput(output_index);
+                }
+            }
+        }
+        break;
 
-		case WM_WTSSESSION_CHANGE:
-		{
-			if (w_param == WTS_CONSOLE_CONNECT || w_param == WTS_SESSION_UNLOCK)
-			{
-				if ((DWORD)l_param == controller->session_id_)
-				{
-					controller->setPowerState(FxModel::getModel().getPowerState());
-					if (!controller->isTimerRunning())
-					{
-						controller->startTimer(100);
-					}
-				}
-				else
-				{
-					controller->dfx_dsp_.powerOn(false);
-					if (controller->isTimerRunning())
-					{
-						controller->stopTimer();
-					}
-				}				
-			}
-		}
-	}
+        case WM_WTSSESSION_CHANGE:
+        {
+            if (w_param == WTS_CONSOLE_CONNECT || w_param == WTS_SESSION_UNLOCK)
+            {
+                if ((DWORD)l_param == controller->session_id_)
+                {
+                    controller->setPowerState(FxModel::getModel().getPowerState());
+                    if (!controller->isTimerRunning())
+                    {
+                        controller->startTimer(100);
+                    }
+                }
+                else
+                {
+                    controller->dfx_dsp_.powerOn(false);
+                    if (controller->isTimerRunning())
+                    {
+                        controller->stopTimer();
+                    }
+                }				
+            }
+        }
+    }
 
-	return DefWindowProc(hwnd, message, w_param, l_param);
+    return DefWindowProc(hwnd, message, w_param, l_param);
 }
 
 void FxController::timerCallback()
 {
-	if (output_changed_)
-	{
-		output_changed_ = false;
-		Thread::sleep(200);
-		return;
-	}
+    if (output_changed_)
+    {
+        output_changed_ = false;
+        Thread::sleep(200);
+        return;
+    }
 
     audio_passthru_->processTimer();
-	auto total_audio_process_time = dfx_dsp_.getTotalAudioProcessedTime();
-	if (audio_process_time_ != total_audio_process_time)
-	{
-		audio_process_time_ = total_audio_process_time;
-		audio_process_on_counter_++;
-		audio_process_off_counter_ = 0;
-	}
-	else
-	{
-		audio_process_off_counter_++;
-		audio_process_on_counter_ = 0;
-	}
+    auto total_audio_process_time = dfx_dsp_.getTotalAudioProcessedTime();
+    if (audio_process_time_ != total_audio_process_time)
+    {
+        audio_process_time_ = total_audio_process_time;
+        audio_process_on_counter_++;
+        audio_process_off_counter_ = 0;
+    }
+    else
+    {
+        audio_process_off_counter_++;
+        audio_process_on_counter_ = 0;
+    }
 
-	if (audio_process_on_counter_ == 5 && !audio_process_on_)
-	{
-		audio_process_on_ = true;
-		main_window_->startLogoAnimation();
+    if (audio_process_on_counter_ == 5 && !audio_process_on_)
+    {
+        audio_process_on_ = true;
+        main_window_->startLogoAnimation();
         if (view_ == ViewType::Pro)
         {
             main_window_->showProView();
-			main_window_->startVisualizer();
+            main_window_->startVisualizer();
         }
-	}
-	if (audio_process_off_counter_ == 5 && audio_process_on_)
-	{
-		audio_process_on_ = false;
-		main_window_->stopLogoAnimation();
+    }
+    if (audio_process_off_counter_ == 5 && audio_process_on_)
+    {
+        audio_process_on_ = false;
+        main_window_->stopLogoAnimation();
         if (view_ == ViewType::Pro)
         {
             main_window_->showProView();
-			main_window_->pauseVisualizer();
+            main_window_->pauseVisualizer();
         }
-	}
+    }
 }
 
 void FxController::onSoundDeviceChange(std::vector<SoundDevice> sound_devices)
@@ -1244,110 +1244,110 @@ void FxController::onSoundDeviceChange(std::vector<SoundDevice> sound_devices)
         FxModel::getModel().notifyOutputError();
     }
 
-	if (sound_devices.size() != device_count_)
-	{
-		updateOutputs(sound_devices);
-		device_count_ = (uint32_t) sound_devices.size();
+    if (sound_devices.size() != device_count_)
+    {
+        updateOutputs(sound_devices);
+        device_count_ = (uint32_t) sound_devices.size();
 
-		if (!dfx_enabled_)
-		{
-			stopTimer();
-			main_window_->removeFromDesktop();
-			FxDeviceErrorMessage error_message;
-			error_message.runModalLoop();
-			JUCEApplication::getInstance()->systemRequestedQuit();
-			return;
-		}
-	}
+        if (!dfx_enabled_)
+        {
+            stopTimer();
+            main_window_->removeFromDesktop();
+            FxDeviceErrorMessage error_message;
+            error_message.runModalLoop();
+            JUCEApplication::getInstance()->systemRequestedQuit();
+            return;
+        }
+    }
 }
 
 void FxController::enableHotkeys(bool enable)
 {
-	settings_.setBool("hotkeys", enable);
-	FxModel::getModel().setHotkeySupport(enable);
-	if (enable)
-	{
-		registerHotkeys();
-	}
-	else
-	{
-		unregisterHotkeys();
-	}
+    settings_.setBool("hotkeys", enable);
+    FxModel::getModel().setHotkeySupport(enable);
+    if (enable)
+    {
+        registerHotkeys();
+    }
+    else
+    {
+        unregisterHotkeys();
+    }
 }
 
 bool FxController::getHotkey(String cmdKey, int& mod, int& vk)
 {
-	int cmd = settings_.getInt(cmdKey);
-	mod = (cmd >> 16) & 0x7;
-	vk = cmd & 0xff;
-	if ((mod == (MOD_CONTROL|MOD_ALT) || mod == (MOD_CONTROL|MOD_SHIFT)) && (vk >= 0x30 && vk <= 0x39) || (vk >= 'A' && vk <= 'Z'))
-	{
-		return true;
-	}
+    int cmd = settings_.getInt(cmdKey);
+    mod = (cmd >> 16) & 0x7;
+    vk = cmd & 0xff;
+    if ((mod == (MOD_CONTROL|MOD_ALT) || mod == (MOD_CONTROL|MOD_SHIFT)) && (vk >= 0x30 && vk <= 0x39) || (vk >= 'A' && vk <= 'Z'))
+    {
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 bool FxController::setHotkey(const String& command, int new_mod, int new_vk)
 {
-	StringArray hotkey_cmds = { HK_CMD_ON_OFF, HK_CMD_OPEN_CLOSE, HK_CMD_NEXT_PRESET, HK_CMD_PREVIOUS_PRESET, HK_CMD_NEXT_OUTPUT };
+    StringArray hotkey_cmds = { HK_CMD_ON_OFF, HK_CMD_OPEN_CLOSE, HK_CMD_NEXT_PRESET, HK_CMD_PREVIOUS_PRESET, HK_CMD_NEXT_OUTPUT };
 
-	for (int i = 0; i < hotkey_cmds.size(); i++)
-	{
-		if (command == hotkey_cmds[i])
-		{
-			continue;
-		}
+    for (int i = 0; i < hotkey_cmds.size(); i++)
+    {
+        if (command == hotkey_cmds[i])
+        {
+            continue;
+        }
 
-		int mod, vk;
-		if (getHotkey(hotkey_cmds[i], mod, vk))
-		{
-			if (mod == new_mod && vk == new_vk)
-			{
-				return false;
-			}
-		}
-	}
+        int mod, vk;
+        if (getHotkey(hotkey_cmds[i], mod, vk))
+        {
+            if (mod == new_mod && vk == new_vk)
+            {
+                return false;
+            }
+        }
+    }
 
-	unsigned int code = (new_mod << 16) | new_vk;
-	settings_.setInt(command, code);
+    unsigned int code = (new_mod << 16) | new_vk;
+    settings_.setInt(command, code);
 
-	if (command == HK_CMD_ON_OFF)
-	{
-		::UnregisterHotKey(message_window_.getHandle(), CMD_ON_OFF);
-		::RegisterHotKey(message_window_.getHandle(), CMD_ON_OFF, new_mod, new_vk);
-		return true;
-	}
+    if (command == HK_CMD_ON_OFF)
+    {
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_ON_OFF);
+        ::RegisterHotKey(message_window_.getHandle(), CMD_ON_OFF, new_mod, new_vk);
+        return true;
+    }
 
-	if (command == HK_CMD_OPEN_CLOSE)
-	{
-		::UnregisterHotKey(message_window_.getHandle(), CMD_OPEN_CLOSE);
-		::RegisterHotKey(message_window_.getHandle(), CMD_OPEN_CLOSE, new_mod, new_vk);
-		return true;
-	}
+    if (command == HK_CMD_OPEN_CLOSE)
+    {
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_OPEN_CLOSE);
+        ::RegisterHotKey(message_window_.getHandle(), CMD_OPEN_CLOSE, new_mod, new_vk);
+        return true;
+    }
 
-	if (command == HK_CMD_NEXT_PRESET)
-	{
-		::UnregisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET);
-		::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET, new_mod, new_vk);
-		return true;
-	}
+    if (command == HK_CMD_NEXT_PRESET)
+    {
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET);
+        ::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET, new_mod, new_vk);
+        return true;
+    }
 
-	if (command == HK_CMD_PREVIOUS_PRESET)
-	{
-		::UnregisterHotKey(message_window_.getHandle(), CMD_PREVIOUS_PRESET);
-		::RegisterHotKey(message_window_.getHandle(), CMD_PREVIOUS_PRESET, new_mod, new_vk);
-		return true;
-	}
+    if (command == HK_CMD_PREVIOUS_PRESET)
+    {
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_PREVIOUS_PRESET);
+        ::RegisterHotKey(message_window_.getHandle(), CMD_PREVIOUS_PRESET, new_mod, new_vk);
+        return true;
+    }
 
-	if (command == HK_CMD_NEXT_OUTPUT)
-	{
-		::UnregisterHotKey(message_window_.getHandle(), CMD_NEXT_OUTPUT);
-		::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_OUTPUT, new_mod, new_vk);
-		return true;
-	}
+    if (command == HK_CMD_NEXT_OUTPUT)
+    {
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_NEXT_OUTPUT);
+        ::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_OUTPUT, new_mod, new_vk);
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 bool FxController::isHelpTooltipsHidden()
@@ -1434,18 +1434,18 @@ void FxController::setLanguage(String language_code)
     {
         LocalisedStrings::setCurrentMappings(new LocalisedStrings(String::createStringFromData(BinaryData::FxSound_de_txt, BinaryData::FxSound_de_txtSize), false));
     }
-	else if (language_.startsWithIgnoreCase("hu"))
-	{
-		LocalisedStrings::setCurrentMappings(new LocalisedStrings(String::createStringFromData(BinaryData::fxsound_hu_txt, BinaryData::fxsound_hu_txtSize), false));
-	}
-	else if (language_.startsWithIgnoreCase("th"))
-	{
-		LocalisedStrings::setCurrentMappings(new LocalisedStrings(String::createStringFromData(BinaryData::FxSound_th_txt, BinaryData::FxSound_th_txtSize), false));
-	}
-	else if (language_.startsWithIgnoreCase("nl"))
-	{
-		LocalisedStrings::setCurrentMappings(new LocalisedStrings(String::createStringFromData(BinaryData::FxSound_nl_txt, BinaryData::FxSound_nl_txtSize), false));
-	}
+    else if (language_.startsWithIgnoreCase("hu"))
+    {
+        LocalisedStrings::setCurrentMappings(new LocalisedStrings(String::createStringFromData(BinaryData::fxsound_hu_txt, BinaryData::fxsound_hu_txtSize), false));
+    }
+    else if (language_.startsWithIgnoreCase("th"))
+    {
+        LocalisedStrings::setCurrentMappings(new LocalisedStrings(String::createStringFromData(BinaryData::FxSound_th_txt, BinaryData::FxSound_th_txtSize), false));
+    }
+    else if (language_.startsWithIgnoreCase("nl"))
+    {
+        LocalisedStrings::setCurrentMappings(new LocalisedStrings(String::createStringFromData(BinaryData::FxSound_nl_txt, BinaryData::FxSound_nl_txtSize), false));
+    }
 
     auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
     theme.loadFont(language_);
@@ -1521,18 +1521,18 @@ String FxController::getLanguageName(String language_code) const
     {
         return L"Deutsch";
     }
-	else if (language_code.startsWithIgnoreCase("hu"))
-	{
-		return L"Magyar";
-	}
-	else if (language_code.startsWithIgnoreCase("th"))
-	{
-		return L"\u0e41\u0e1a\u0e1a\u0e44\u0e17\u0e22";
-	}
-	else if (language_code.startsWithIgnoreCase("nl"))
-	{
-		return L"Nederlands";
-	}
+    else if (language_code.startsWithIgnoreCase("hu"))
+    {
+        return L"Magyar";
+    }
+    else if (language_code.startsWithIgnoreCase("th"))
+    {
+        return L"\u0e41\u0e1a\u0e1a\u0e44\u0e17\u0e22";
+    }
+    else if (language_code.startsWithIgnoreCase("nl"))
+    {
+        return L"Nederlands";
+    }
 
 
     return "English";
@@ -1540,7 +1540,7 @@ String FxController::getLanguageName(String language_code) const
 
 int FxController::getMaxUserPresets() const
 {
-	return max_user_presets_;
+    return max_user_presets_;
 }
 
 bool FxController::isOutputAutoSelect()
@@ -1556,82 +1556,82 @@ void FxController::setOutputAutoSelect(bool auto_select)
 
 bool FxController::isLaunchOnStartup()
 {
-	HKEY hkey;
-	RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_QUERY_VALUE, &hkey);
-	DWORD type;
-	DWORD size = 0;
-	RegQueryValueEx(hkey, L"FxSound", NULL, &type, NULL, &size);
-	RegCloseKey(hkey);
+    HKEY hkey;
+    RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_QUERY_VALUE, &hkey);
+    DWORD type;
+    DWORD size = 0;
+    RegQueryValueEx(hkey, L"FxSound", NULL, &type, NULL, &size);
+    RegCloseKey(hkey);
 
-	return size > 0;
+    return size > 0;
 }
 
 void FxController::setLaunchOnStartup(bool launch_on_startup)
 {
-	wchar_t szPath[MAX_PATH];
-	GetModuleFileName(NULL, szPath, MAX_PATH);
-	HKEY hkey;
-	RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_SET_VALUE, &hkey);
+    wchar_t szPath[MAX_PATH];
+    GetModuleFileName(NULL, szPath, MAX_PATH);
+    HKEY hkey;
+    RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_SET_VALUE, &hkey);
 
-	if (launch_on_startup)
-	{
-		RegSetValueEx(hkey, L"FxSound", 0, REG_SZ, (BYTE*)szPath, sizeof(szPath));
-	}
-	else
-	{
-		RegDeleteValue(hkey, L"FxSound");
-	}
+    if (launch_on_startup)
+    {
+        RegSetValueEx(hkey, L"FxSound", 0, REG_SZ, (BYTE*)szPath, sizeof(szPath));
+    }
+    else
+    {
+        RegDeleteValue(hkey, L"FxSound");
+    }
 
-	RegCloseKey(hkey);
+    RegCloseKey(hkey);
 }
 
 void FxController::registerHotkeys()
 {
-	if (!hotkeys_registered_)
-	{
-		int mod;
-		int vk;
+    if (!hotkeys_registered_)
+    {
+        int mod;
+        int vk;
 
-		if (getHotkey(HK_CMD_ON_OFF, mod, vk))
-		{
-			::RegisterHotKey(message_window_.getHandle(), CMD_ON_OFF, mod, vk);
-		}
-		
-		if (getHotkey(HK_CMD_OPEN_CLOSE, mod, vk))
-		{
-			::RegisterHotKey(message_window_.getHandle(), CMD_OPEN_CLOSE, mod, vk);
-		}
+        if (getHotkey(HK_CMD_ON_OFF, mod, vk))
+        {
+            ::RegisterHotKey(message_window_.getHandle(), CMD_ON_OFF, mod, vk);
+        }
+        
+        if (getHotkey(HK_CMD_OPEN_CLOSE, mod, vk))
+        {
+            ::RegisterHotKey(message_window_.getHandle(), CMD_OPEN_CLOSE, mod, vk);
+        }
 
-		if (getHotkey(HK_CMD_NEXT_PRESET, mod, vk))
-		{
-			::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET, mod, vk);
-		}
+        if (getHotkey(HK_CMD_NEXT_PRESET, mod, vk))
+        {
+            ::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET, mod, vk);
+        }
 
-		if (getHotkey(HK_CMD_PREVIOUS_PRESET, mod, vk))
-		{
-			::RegisterHotKey(message_window_.getHandle(), CMD_PREVIOUS_PRESET, mod, vk);
-		}
+        if (getHotkey(HK_CMD_PREVIOUS_PRESET, mod, vk))
+        {
+            ::RegisterHotKey(message_window_.getHandle(), CMD_PREVIOUS_PRESET, mod, vk);
+        }
 
-		if (getHotkey(HK_CMD_NEXT_OUTPUT, mod, vk))
-		{
-			::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_OUTPUT, mod, vk);
-		}
-		
-		hotkeys_registered_ = true;
-	}	
+        if (getHotkey(HK_CMD_NEXT_OUTPUT, mod, vk))
+        {
+            ::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_OUTPUT, mod, vk);
+        }
+        
+        hotkeys_registered_ = true;
+    }	
 }
 
 void FxController::unregisterHotkeys()
 {
-	if (hotkeys_registered_)
-	{
-		::UnregisterHotKey(message_window_.getHandle(), CMD_ON_OFF);
-		::UnregisterHotKey(message_window_.getHandle(), CMD_OPEN_CLOSE);
-		::UnregisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET);
-		::UnregisterHotKey(message_window_.getHandle(), CMD_PREVIOUS_PRESET);
-		::UnregisterHotKey(message_window_.getHandle(), CMD_NEXT_OUTPUT);
-		hotkeys_registered_ = false;
-	}
+    if (hotkeys_registered_)
+    {
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_ON_OFF);
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_OPEN_CLOSE);
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET);
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_PREVIOUS_PRESET);
+        ::UnregisterHotKey(message_window_.getHandle(), CMD_NEXT_OUTPUT);
+        hotkeys_registered_ = false;
+    }
 }
 
 void FxController::getSpectrumBandValues(Array<float>& band_values)
@@ -1643,14 +1643,14 @@ void FxController::getSpectrumBandValues(Array<float>& band_values)
     band_values.clearQuick();
     for (auto i = 0; i < NUM_SPECTRUM_BANDS; i++)
     {
-		if (audio_process_on_)
-		{
-			band_values.set(i, values[i]);
-		}
-		else
-		{
-			band_values.set(i, 0.01);
-		}
+        if (audio_process_on_)
+        {
+            band_values.set(i, values[i]);
+        }
+        else
+        {
+            band_values.set(i, 0.01);
+        }
     }
 }
 

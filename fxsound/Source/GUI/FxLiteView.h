@@ -31,12 +31,12 @@ public:
     ~FxLiteView() = default;
 
     void resized() override;
-	void paint(Graphics& g) override;
+    void paint(Graphics& g) override;
 
 private:
-	static constexpr int PRESET_LIST_X = 40;
-	static constexpr int OUTPUT_LIST_X = 285;
-	static constexpr int LIST_Y = 42;
+    static constexpr int PRESET_LIST_X = 40;
+    static constexpr int OUTPUT_LIST_X = 285;
+    static constexpr int LIST_Y = 42;
     static constexpr int BACKGROUND_WIDTH = LIST_WIDTH*2 + 20*3;
     static constexpr int BACKGROUND_HEIGHT = LIST_HEIGHT + 40;
     static constexpr int WIDTH = BACKGROUND_WIDTH + 40;

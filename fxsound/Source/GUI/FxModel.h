@@ -24,207 +24,207 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class FxModel final
 {
 public:
-	enum Event { Notification=1, Subscription, PresetSelected, PresetListUpdated, PresetModified, OutputSelected, OutputListUpdated, OutputError, Other };
-	enum PresetType { AppPreset=1, UserPreset=2 };
+    enum Event { Notification=1, Subscription, PresetSelected, PresetListUpdated, PresetModified, OutputSelected, OutputListUpdated, OutputError, Other };
+    enum PresetType { AppPreset=1, UserPreset=2 };
 
-	static constexpr wchar_t* SUBSCRIBE_URL = L"https://fxsound.com/pricing";
+    static constexpr wchar_t* SUBSCRIBE_URL = L"https://fxsound.com/pricing";
 
-	struct AccountInfo final
-	{
-		String email;
-		String subscription;
-		bool trial;
-	};
+    struct AccountInfo final
+    {
+        String email;
+        String subscription;
+        bool trial;
+    };
 
-	struct AccountLog final
-	{
-		int64_t next_limited_playback_time;
-		uint32_t playback_duration;
-	};
+    struct AccountLog final
+    {
+        int64_t next_limited_playback_time;
+        uint32_t playback_duration;
+    };
 
-	struct Preset final
-	{
-		String name;
-		String path;
-		PresetType type;
-	};
+    struct Preset final
+    {
+        String name;
+        String path;
+        PresetType type;
+    };
 
-	class Listener
-	{
-	public:
-		Listener() = default;
-		virtual ~Listener() = default;
+    class Listener
+    {
+    public:
+        Listener() = default;
+        virtual ~Listener() = default;
 
-		virtual void modelChanged(Event) {}
-	};
+        virtual void modelChanged(Event) {}
+    };
 
-	static FxModel& getModel()
-	{
-		static FxModel model;
-		return model;
-	}
+    static FxModel& getModel()
+    {
+        static FxModel model;
+        return model;
+    }
 
-	FxModel(const FxModel&) = delete;
-	void operator=(const FxModel&) = delete;
+    FxModel(const FxModel&) = delete;
+    void operator=(const FxModel&) = delete;
 
-	void initOutputNames(const StringArray& output_names);
+    void initOutputNames(const StringArray& output_names);
 
-	void initPresets(const Array<Preset>& presets);
-	int  addPreset(const Preset& preset);
-	void removePreset(int preset);
-	int  selectPreset(const String& selected_preset, bool notify=true);
-	void selectPreset(int selected_preset, bool notify=true);
-	int getSelectedPreset() const;
-	int getPresetCount() const;
-	int getUserPresetCount() const;
-	Preset getPreset(int preset) const;
-	bool isPresetModified() const;
-	void setPresetModified(bool preset_modified);
+    void initPresets(const Array<Preset>& presets);
+    int  addPreset(const Preset& preset);
+    void removePreset(int preset);
+    int  selectPreset(const String& selected_preset, bool notify=true);
+    void selectPreset(int selected_preset, bool notify=true);
+    int getSelectedPreset() const;
+    int getPresetCount() const;
+    int getUserPresetCount() const;
+    Preset getPreset(int preset) const;
+    bool isPresetModified() const;
+    void setPresetModified(bool preset_modified);
     bool isPresetNameValid(const String& preset_name);
 
-	bool getPowerState()
-	{
-		return power_state_;
-	}
+    bool getPowerState()
+    {
+        return power_state_;
+    }
 
-	void setPowerState(bool power_state)
-	{
-		power_state_ = power_state;
-		notifyListeners();
-	}
+    void setPowerState(bool power_state)
+    {
+        power_state_ = power_state;
+        notifyListeners();
+    }
 
-	const StringArray& getOutputNames() const
-	{
-		return output_names_;
-	}
+    const StringArray& getOutputNames() const
+    {
+        return output_names_;
+    }
 
-	int getSelectedOutput()
-	{
-		return selected_output_;
-	}
+    int getSelectedOutput()
+    {
+        return selected_output_;
+    }
 
-	void setSelectedOutput(int selected_output)
-	{
-		selected_output_ = selected_output;
-		notifyListeners(Event::OutputSelected);
-	}
+    void setSelectedOutput(int selected_output)
+    {
+        selected_output_ = selected_output;
+        notifyListeners(Event::OutputSelected);
+    }
 
     void notifyOutputError()
     {
         notifyListeners(Event::OutputError);
     }
 
-	AccountInfo getAccountInfo() const
-	{
-		return account_info_;
-	}
+    AccountInfo getAccountInfo() const
+    {
+        return account_info_;
+    }
 
-	void setEmail(String email)
-	{
-		account_info_.email = email;
-	}
+    void setEmail(String email)
+    {
+        account_info_.email = email;
+    }
 
-	void setSubscription(String subscription)
-	{
-		account_info_.subscription = subscription;
-		notifyListeners(Event::Subscription);
-	}
+    void setSubscription(String subscription)
+    {
+        account_info_.subscription = subscription;
+        notifyListeners(Event::Subscription);
+    }
 
-	AccountLog getAccountLog() const
-	{
-		return account_log_;
-	}
+    AccountLog getAccountLog() const
+    {
+        return account_log_;
+    }
 
-	void setAccountLog(const AccountLog& account_log)
-	{
-		account_log_ = account_log;
-	}
+    void setAccountLog(const AccountLog& account_log)
+    {
+        account_log_ = account_log;
+    }
 
-	void setTrial(bool trial)
-	{
-		account_info_.trial = trial;
-	}
+    void setTrial(bool trial)
+    {
+        account_info_.trial = trial;
+    }
 
-	bool getHotkeySupport()
-	{
-		return hotkey_support_;
-	}
+    bool getHotkeySupport()
+    {
+        return hotkey_support_;
+    }
 
-	void setHotkeySupport(bool hotkey_support)
-	{
-		hotkey_support_ = hotkey_support;
-	}
+    void setHotkeySupport(bool hotkey_support)
+    {
+        hotkey_support_ = hotkey_support;
+    }
 
-	bool isMenuClicked()
-	{
-		return menu_clicked_;
-	}
+    bool isMenuClicked()
+    {
+        return menu_clicked_;
+    }
 
-	void setMenuClicked(bool clicked)
-	{
-		menu_clicked_ = clicked;
-	}
+    void setMenuClicked(bool clicked)
+    {
+        menu_clicked_ = clicked;
+    }
 
-	int getLanguage()
-	{
-		return language_;
-	}
+    int getLanguage()
+    {
+        return language_;
+    }
 
-	void setLanguage(int language)
-	{
-		language_ = language;
-	}
+    void setLanguage(int language)
+    {
+        language_ = language;
+    }
 
-	bool getDebugLogging()
-	{
-		return debug_logging_;
-	}
+    bool getDebugLogging()
+    {
+        return debug_logging_;
+    }
 
-	void setDebugLogging(bool debug_logging)
-	{
-		debug_logging_ = debug_logging;
-	}
-	
-	void pushMessage(String message, std::pair<String, String> link = {})
-	{
-		message_ = message;
-		message_link_ = link;
-		notifyListeners(Event::Notification);
-	}
+    void setDebugLogging(bool debug_logging)
+    {
+        debug_logging_ = debug_logging;
+    }
+    
+    void pushMessage(String message, std::pair<String, String> link = {})
+    {
+        message_ = message;
+        message_link_ = link;
+        notifyListeners(Event::Notification);
+    }
 
-	void popMessage(String& message, std::pair<String, String>& link)
-	{
-		message = message_;
-		link = message_link_;
-		message_.clear();
-		message_link_ = { "", "" };
-	}
+    void popMessage(String& message, std::pair<String, String>& link)
+    {
+        message = message_;
+        link = message_link_;
+        message_.clear();
+        message_link_ = { "", "" };
+    }
 
-	void addListener(Listener* l) { listeners_.add(l); }
-	void removeListener(Listener* l) { listeners_.remove(l); }
-	void notifyListeners(Event model_event = Event::Other);
+    void addListener(Listener* l) { listeners_.add(l); }
+    void removeListener(Listener* l) { listeners_.remove(l); }
+    void notifyListeners(Event model_event = Event::Other);
 
 private:
-	FxModel();
+    FxModel();
 
-	bool power_state_;
-	Array<Preset> presets_;
-	bool preset_modified_;
-	StringArray output_names_;
-	int selected_preset_;
-	int selected_output_;
+    bool power_state_;
+    Array<Preset> presets_;
+    bool preset_modified_;
+    StringArray output_names_;
+    int selected_preset_;
+    int selected_output_;
     bool output_disconnected_;
-	AccountInfo account_info_;
-	AccountLog account_log_;
-	bool hotkey_support_;
-	bool menu_clicked_;
-	int language_;
-	bool debug_logging_;
+    AccountInfo account_info_;
+    AccountLog account_log_;
+    bool hotkey_support_;
+    bool menu_clicked_;
+    int language_;
+    bool debug_logging_;
 
-	String message_;
-	std::pair<String, String> message_link_;
+    String message_;
+    std::pair<String, String> message_link_;
 
-	ListenerList<Listener> listeners_;
+    ListenerList<Listener> listeners_;
 };
 
 #endif

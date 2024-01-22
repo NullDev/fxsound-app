@@ -29,7 +29,7 @@ public:
     FxComboBox();
     ~FxComboBox() = default;
 
-	void highlightText(bool highlight);
+    void highlightText(bool highlight);
     bool getError();
     void setError(bool enable);
 

@@ -23,36 +23,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //==============================================================================
 FxLiteView::FxLiteView()
 {	
-	setOpaque(false);
-	setSize(WIDTH, HEIGHT);
+    setOpaque(false);
+    setSize(WIDTH, HEIGHT);
 }
 
 void FxLiteView::resized()
 {
-	RectanglePlacement placement(RectanglePlacement::xMid | RectanglePlacement::doNotResize);
+    RectanglePlacement placement(RectanglePlacement::xMid | RectanglePlacement::doNotResize);
 
-	auto bounds = getLocalBounds();
-	auto component_bounds = preset_list_.getLocalBounds();
+    auto bounds = getLocalBounds();
+    auto component_bounds = preset_list_.getLocalBounds();
 
-	component_bounds.setX(PRESET_LIST_X);
-	component_bounds.setY(LIST_Y);
-	preset_list_.setBounds(component_bounds);
+    component_bounds.setX(PRESET_LIST_X);
+    component_bounds.setY(LIST_Y);
+    preset_list_.setBounds(component_bounds);
 
-	component_bounds = endpoint_list_.getLocalBounds();
-	component_bounds.setX(OUTPUT_LIST_X);
-	component_bounds.setY(LIST_Y);
-	endpoint_list_.setBounds(component_bounds);
+    component_bounds = endpoint_list_.getLocalBounds();
+    component_bounds.setX(OUTPUT_LIST_X);
+    component_bounds.setY(LIST_Y);
+    endpoint_list_.setBounds(component_bounds);
 }
 
 void FxLiteView::paint(Graphics& g)
 {
-	auto& theme = dynamic_cast<LookAndFeel_V4&>(getLookAndFeel());
+    auto& theme = dynamic_cast<LookAndFeel_V4&>(getLookAndFeel());
 
-	g.setFillType(FillType(theme.getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::windowBackground)));
-	g.fillAll();
+    g.setFillType(FillType(theme.getCurrentColourScheme().getUIColour(LookAndFeel_V4::ColourScheme::windowBackground)));
+    g.fillAll();
 
-	g.setFillType(FillType(Colour(0x0).withAlpha(0.2f)));
-	g.fillRoundedRectangle(20, 22, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, 10);
+    g.setFillType(FillType(Colour(0x0).withAlpha(0.2f)));
+    g.fillRoundedRectangle(20, 22, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, 10);
 
     auto power_state = FxModel::getModel().getPowerState();
     preset_list_.setEnabled(power_state);

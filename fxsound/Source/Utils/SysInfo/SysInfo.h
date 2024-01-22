@@ -24,14 +24,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class SysInfo
 {
 public:
-	SysInfo() = default;
-	~SysInfo() = default;
+    SysInfo() = default;
+    ~SysInfo() = default;
 
-	static void enumAudioOutputs(StringArray& audioOutputNames);
+    static void enumAudioOutputs(StringArray& audioOutputNames);
     static bool isServiceRunning(LPCWSTR service_name);
     static bool canSupportHotkeys();
 
 private:
-	static String getAudioOutputName(IMMDevice *pDevice);
+    static String getAudioOutputName(IMMDevice *pDevice);
 };
 

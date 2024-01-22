@@ -22,35 +22,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class FxHotkeyEditor : public Label
 {
 public:
-	FxHotkeyEditor(const String& command);
+    FxHotkeyEditor(const String& command);
 
 private:
-	static constexpr int HOTKEY_EDITOR_WIDTH = 120;
-	static constexpr int HOTKEY_EDITOR_HEIGHT = 20;
+    static constexpr int HOTKEY_EDITOR_WIDTH = 120;
+    static constexpr int HOTKEY_EDITOR_HEIGHT = 20;
 
-	bool keyPressed(const KeyPress& key) override;
-	void focusGained(FocusChangeType cause) override;
-	void focusLost(FocusChangeType cause) override;
-	void paint(juce::Graphics& g) override;
+    bool keyPressed(const KeyPress& key) override;
+    void focusGained(FocusChangeType cause) override;
+    void focusLost(FocusChangeType cause) override;
+    void paint(juce::Graphics& g) override;
 
-	void setKeyText();
+    void setKeyText();
 
-	String key_text_;
-	String command_;
-	int mod_;
-	int vk_;
+    String key_text_;
+    String command_;
+    int mod_;
+    int vk_;
 };
 
 class FxHotkeyLabel : public Component
 {
 public:
-	FxHotkeyLabel(const String& name, const String& command);
+    FxHotkeyLabel(const String& name, const String& command);
 
 private:
-	static constexpr int HOTKEY_LABEL_WIDTH = 170;
+    static constexpr int HOTKEY_LABEL_WIDTH = 170;
 
-	void resized();
+    void resized();
 
-	Label label_;
-	FxHotkeyEditor hotkey_editor_;
+    Label label_;
+    FxHotkeyEditor hotkey_editor_;
 };

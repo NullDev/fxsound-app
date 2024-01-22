@@ -23,40 +23,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace FxSound
 {
-	constexpr wchar_t APPLICATION_NAME[] = L"FxSound";
-	constexpr wchar_t SETTINGS_FOLDER[] = L"FxSound";
-	constexpr wchar_t SETTINGS_EXTN[] = L"settings";
-	constexpr wchar_t SECURE_EXTN[] = L"secure";
+    constexpr wchar_t APPLICATION_NAME[] = L"FxSound";
+    constexpr wchar_t SETTINGS_FOLDER[] = L"FxSound";
+    constexpr wchar_t SETTINGS_EXTN[] = L"settings";
+    constexpr wchar_t SECURE_EXTN[] = L"secure";
 
-	class Settings final
-	{
-	public:
-		Settings();
-		~Settings();
+    class Settings final
+    {
+    public:
+        Settings();
+        ~Settings();
 
-		String getString(StringRef key) noexcept;
-		int    getInt(StringRef key) noexcept;
-		double getDouble(StringRef key) noexcept;
-		bool   getBool(StringRef key) noexcept;
+        String getString(StringRef key) noexcept;
+        int    getInt(StringRef key) noexcept;
+        double getDouble(StringRef key) noexcept;
+        bool   getBool(StringRef key) noexcept;
 
-		void setString(StringRef key, String value, bool default=false) noexcept;
-		void setInt(StringRef key, int value, bool default = false) noexcept;
-		void setDouble(StringRef key, double value, bool default = false) noexcept;
-		void setBool(StringRef key, bool value, bool default = false) noexcept;
+        void setString(StringRef key, String value, bool default=false) noexcept;
+        void setInt(StringRef key, int value, bool default = false) noexcept;
+        void setDouble(StringRef key, double value, bool default = false) noexcept;
+        void setBool(StringRef key, bool value, bool default = false) noexcept;
 
-		String getSecure(String key);
-		void   setSecure(String key, String value);
+        String getSecure(String key);
+        void   setSecure(String key, String value);
 
-		static bool isAdminUser();
+        static bool isAdminUser();
 
-	private:
-		ApplicationProperties app_default_properties_;
-		ApplicationProperties app_user_properties_;
-		ApplicationProperties app_secure_properties_;
-		PropertySet default_settings_;
-		PropertiesFile* user_settings_;
-		PropertiesFile* secure_settings_;
-	};
+    private:
+        ApplicationProperties app_default_properties_;
+        ApplicationProperties app_user_properties_;
+        ApplicationProperties app_secure_properties_;
+        PropertySet default_settings_;
+        PropertiesFile* user_settings_;
+        PropertiesFile* secure_settings_;
+    };
 }
 
 #endif

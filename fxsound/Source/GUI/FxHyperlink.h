@@ -30,9 +30,9 @@ public:
     FxHyperlink();
     ~FxHyperlink() = default;
 
-	void paintButton(Graphics& g, bool, bool) override;
+    void paintButton(Graphics& g, bool, bool) override;
 
-	int getTextWidth();
+    int getTextWidth();
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FxHyperlink)

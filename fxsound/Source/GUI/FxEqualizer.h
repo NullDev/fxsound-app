@@ -26,8 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class FxEqualizer : public Component, Slider::Listener, Timer
 {
 public:
-	FxEqualizer();
-	~FxEqualizer() = default;
+    FxEqualizer();
+    ~FxEqualizer() = default;
 
     void sliderValueChanged(Slider*slider) override;
     void sliderDragStarted(Slider* slider) override;
@@ -35,8 +35,8 @@ public:
 
     void timerCallback() override;
 
-	void update();
-	void showValues(bool show);
+    void update();
+    void showValues(bool show);
 
 private:
     class FxEqSlider : public Slider
@@ -81,20 +81,20 @@ private:
         int band_;
     };
 
-	static constexpr int WIDTH = 696;
-	static constexpr int HEIGHT = 242;
-	static constexpr int SLIDER_HEIGHT = 170;
-	static constexpr int LABEL_HEIGHT = 12;
+    static constexpr int WIDTH = 696;
+    static constexpr int HEIGHT = 242;
+    static constexpr int SLIDER_HEIGHT = 170;
+    static constexpr int LABEL_HEIGHT = 12;
     static constexpr int ROTARY_SLIDER_HEIGHT = 36;
-	static constexpr int X_MARGIN = 16;
-	static constexpr int Y_MARGIN = 8;
+    static constexpr int X_MARGIN = 16;
+    static constexpr int Y_MARGIN = 8;
 
-	static constexpr float MAX_GAIN = 12.0f;
+    static constexpr float MAX_GAIN = 12.0f;
 
-	void resized() override;
-	void paint(Graphics& g) override;
+    void resized() override;
+    void paint(Graphics& g) override;
 
-	std::vector<std::unique_ptr<Label>> labels_;
+    std::vector<std::unique_ptr<Label>> labels_;
     std::vector<std::unique_ptr<FxEqSlider>> band_boosts_;
     std::vector<std::unique_ptr<FxBandCenterFreqSlider>> center_frequencies_;
     std::vector<float> band_gain_values_;

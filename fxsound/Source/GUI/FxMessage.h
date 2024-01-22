@@ -30,37 +30,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class FxMessage : public FxWindow
 {
 public:
-	FxMessage(String title, String message);
-	~FxMessage() = default;
+    FxMessage(String title, String message);
+    ~FxMessage() = default;
 
-	void closeButtonPressed() override;
+    void closeButtonPressed() override;
 
 private:
-	class MessageComponent : public Component
-	{
-	public:
-		MessageComponent(String title, String message);
-		~MessageComponent() = default;
+    class MessageComponent : public Component
+    {
+    public:
+        MessageComponent(String title, String message);
+        ~MessageComponent() = default;
 
-		void resized() override;
+        void resized() override;
 
-	private:
-		static constexpr int WIDTH = 400;
-		static constexpr int HEIGHT = 228;
-		static constexpr int TITLE_HEIGHT = 30;
-		static constexpr int MESSAGE_HEIGHT = (24 + 2) * 4;
-		static constexpr int HYPERLINK_HEIGHT = 24;
+    private:
+        static constexpr int WIDTH = 400;
+        static constexpr int HEIGHT = 228;
+        static constexpr int TITLE_HEIGHT = 30;
+        static constexpr int MESSAGE_HEIGHT = (24 + 2) * 4;
+        static constexpr int HYPERLINK_HEIGHT = 24;
 
-		Label title_;
-		Label message_;
-		FxHyperlink subscribe_link_;
+        Label title_;
+        Label message_;
+        FxHyperlink subscribe_link_;
 
-		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MessageComponent)
-	};
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MessageComponent)
+    };
 
-	MessageComponent message_content_;
+    MessageComponent message_content_;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxMessage)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxMessage)
 };
 
 class FxConfirmationMessage : public FxWindow
