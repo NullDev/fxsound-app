@@ -1367,33 +1367,33 @@ bool FxController::setHotkey(const String& command, int new_mod, int new_vk)
 
 bool FxController::isValidHotkey(int mod, int vk)
 {
-	if ((mod & MOD_CONTROL) == 0)
-	{
-		return false;
-	}
-		
-	HKL hkl = GetKeyboardLayout(0);
-	BYTE kbd_state[256] = { 0 };
-	kbd_state[VK_CONTROL] = 0x80;
+    if ((mod & MOD_CONTROL) == 0)
+    {
+        return false;
+    }
+        
+    HKL hkl = GetKeyboardLayout(0);
+    BYTE kbd_state[256] = { 0 };
+    kbd_state[VK_CONTROL] = 0x80;
 
-	if ((mod & MOD_ALT) != 0)
-	{
-		kbd_state[VK_MENU] = 0x80;
-	}
-	if ((mod & MOD_SHIFT) != 0)
-	{
-		kbd_state[VK_SHIFT] = 0x80;
-	}
-	
-	WCHAR output[3] = { 0 };
+    if ((mod & MOD_ALT) != 0)
+    {
+        kbd_state[VK_MENU] = 0x80;
+    }
+    if ((mod & MOD_SHIFT) != 0)
+    {
+        kbd_state[VK_SHIFT] = 0x80;
+    }
+    
+    WCHAR output[3] = { 0 };
 
-	int len = ToUnicodeEx(vk, 0, kbd_state, output, 3, 0, hkl);
-	if (len > 0 && output[0] >= 0x20) // The hotkey combination generates a non-control character
-	{
-		return false;
-	}
+    int len = ToUnicodeEx(vk, 0, kbd_state, output, 3, 0, hkl);
+    if (len > 0 && output[0] >= 0x20) // The hotkey combination generates a non-control character
+    {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 bool FxController::isHelpTooltipsHidden()
@@ -1659,7 +1659,7 @@ void FxController::registerHotkeys()
             if (isValidHotkey(mod, vk))
             {
                 ::RegisterHotKey(message_window_.getHandle(), CMD_NEXT_PRESET, mod, vk);
-			}
+            }
         }
 
         if (getHotkey(HK_CMD_PREVIOUS_PRESET, mod, vk))
